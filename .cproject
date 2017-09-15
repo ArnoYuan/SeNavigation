@@ -47,9 +47,9 @@
 								<option id="gnu.cpp.link.option.libs.2023492183" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="SeNaviCommon"/>
 									<listOptionValue builtIn="false" value="boost_program_options"/>
-									<listOptionValue builtIn="false" value="rt"/>
 									<listOptionValue builtIn="false" value="boost_thread"/>
 									<listOptionValue builtIn="false" value="boost_system"/>
+									<listOptionValue builtIn="false" value="rt"/>
 									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="orocos-bfl"/>
 								</option>
@@ -176,8 +176,10 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.892766579" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.libs.1072900927" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="SeNaviCommon"/>
+									<listOptionValue builtIn="false" value="boost_program_options"/>
 									<listOptionValue builtIn="false" value="boost_thread"/>
 									<listOptionValue builtIn="false" value="boost_system"/>
+									<listOptionValue builtIn="false" value="rt"/>
 									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="orocos-bfl"/>
 								</option>

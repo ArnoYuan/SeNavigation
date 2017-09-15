@@ -23,35 +23,15 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Source/Application \
-Source/Communication \
-Source/Controller/Communication \
-Source/Controller \
-Source/Controller/ExtendedKalmanFilter \
-Source/Controller/Simulator \
+Source/CostMap/CostMap2D \
+Source/CostMap \
+Source/CostMap/Layers \
+Source/CostMap/Utils \
 Source \
-Source/Mapping/GMapping \
-Source/Mapping/GMapping/GridFastSlam \
-Source/Mapping/GMapping/Log \
-Source/Mapping/GMapping/ScanMatcher \
-Source/Mapping/GMapping/Sensor/SensorBase \
-Source/Mapping/GMapping/Sensor/SensorOdometry \
-Source/Mapping/GMapping/Sensor/SensorRange \
-Source/Mapping/GMapping/Utils \
-Source/Mapping/Hector \
-Source/Mapping/Hector/Utils \
-Source/Navigation/CostMap/CostMap2D \
-Source/Navigation/CostMap \
-Source/Navigation/CostMap/Layers \
-Source/Navigation/CostMap/Utils \
-Source/Navigation \
-Source/Navigation/Planner/Implements/DwaLocalPlanner/Algorithm \
-Source/Navigation/Planner/Implements/DwaLocalPlanner \
-Source/Navigation/Planner/Implements/GlobalPlanner/Algorithm \
-Source/Navigation/Planner/Implements/GlobalPlanner \
-Source/Navigation/Planner/Implements/TrajectoryLocalPlanner/Algorithm \
-Source/Navigation/Planner/Implements/TrajectoryLocalPlanner \
-Source/Sensor/Lidar/Driver \
-Source/Sensor/Lidar \
-Source/Test \
+Source/Planner/Implements/DwaLocalPlanner/Algorithm \
+Source/Planner/Implements/DwaLocalPlanner \
+Source/Planner/Implements/GlobalPlanner/Algorithm \
+Source/Planner/Implements/GlobalPlanner \
+Source/Planner/Implements/TrajectoryLocalPlanner/Algorithm \
+Source/Planner/Implements/TrajectoryLocalPlanner \
 

@@ -87,6 +87,7 @@ namespace NS_Planner
        plan_pose.header.frame_id, plan_pose.header.stamp, 
        plan_pose.header.frame_id, plan_to_global_transform);
        */
+      //TODO: may be not need ,map->odom
       if (map_tf_cli.call (map_transform) == false)
       {
         printf ("Get map transform failure!\n");

@@ -4,20 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Source/Main.cpp \
-../Source/NavigationApplication.cpp 
+../Source/Planner/Implements/TrajectoryLocalPlanner/TrajectoryLocalPlanner.cpp 
 
 OBJS += \
-./Source/Main.o \
-./Source/NavigationApplication.o 
+./Source/Planner/Implements/TrajectoryLocalPlanner/TrajectoryLocalPlanner.o 
 
 CPP_DEPS += \
-./Source/Main.d \
-./Source/NavigationApplication.d 
+./Source/Planner/Implements/TrajectoryLocalPlanner/TrajectoryLocalPlanner.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Source/%.o: ../Source/%.cpp
+Source/Planner/Implements/TrajectoryLocalPlanner/%.o: ../Source/Planner/Implements/TrajectoryLocalPlanner/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
 	arm-openwrt-linux-muslgnueabi-g++ -I$(SENAVICOMMON_PATH)/Source -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
