@@ -44,10 +44,9 @@ namespace NS_Planner
       double distance_sq = x_diff * x_diff + y_diff * y_diff;
       if (distance_sq < 1)
       {
-        printf (
-            "Nearest waypoint to <%f, %f> is <%f, %f>\n",
-            global_pose.getOrigin ().x (), global_pose.getOrigin ().y (),
-            w.pose.position.x, w.pose.position.y);
+        printf ("Nearest waypoint to <%f, %f> is <%f, %f>\n",
+                global_pose.getOrigin ().x (), global_pose.getOrigin ().y (),
+                w.pose.position.x, w.pose.position.y);
         break;
       }
       it = plan.erase (it);
@@ -56,7 +55,8 @@ namespace NS_Planner
   }
   
   bool
-  transformGlobalPlan (const std::vector<NS_DataType::PoseStamped>& global_plan,
+  transformGlobalPlan (
+      const std::vector<NS_DataType::PoseStamped>& global_plan,
       const NS_Transform::Stamped<NS_Transform::Pose>& global_pose,
       const NS_CostMap::Costmap2D& costmap,
       std::vector<NS_DataType::PoseStamped>& transformed_plan)
@@ -72,7 +72,8 @@ namespace NS_Planner
     const NS_DataType::PoseStamped& plan_pose = global_plan[0];
     if (1)
     {
-      NS_Service::Client<NS_ServiceType::ServiceTransform> map_tf_cli ("ODOM_MAP_TF");
+      NS_Service::Client<NS_ServiceType::ServiceTransform> map_tf_cli (
+          "ODOM_MAP_TF");
       NS_ServiceType::ServiceTransform map_transform;
       
       // get plan_to_global_transform from plan frame to global_frame
@@ -104,7 +105,8 @@ namespace NS_Planner
       /*
        NS_Transform.transformPose(plan_pose.header.frame_id, global_pose, robot_pose);
        */
-      NS_Service::Client<NS_ServiceType::ServiceTransform> odom_tf_cli ("BASE_ODOM_TF");
+      NS_Service::Client<NS_ServiceType::ServiceTransform> odom_tf_cli (
+          "BASE_ODOM_TF");
       NS_ServiceType::ServiceTransform odom_transform;
       NS_Transform::Transform global_to_base_tf;
       if (odom_tf_cli.call (odom_transform) == false)
@@ -190,7 +192,8 @@ namespace NS_Planner
        plan_goal_pose.header.frame_id, plan_goal_pose.header.stamp,
        plan_goal_pose.header.frame_id, transform);
        */
-      NS_Service::Client<NS_ServiceType::ServiceTransform> map_tf_cli ("ODOM_MAP_TF");
+      NS_Service::Client<NS_ServiceType::ServiceTransform> map_tf_cli (
+          "ODOM_MAP_TF");
       NS_ServiceType::ServiceTransform map_transform;
       if (map_tf_cli.call (map_transform) == false)
       {

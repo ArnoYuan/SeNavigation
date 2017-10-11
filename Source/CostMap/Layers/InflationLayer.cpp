@@ -43,15 +43,17 @@ namespace NS_CostMap
     }
     
     NS_NaviCommon::Parameter parameter;
-
+    
     parameter.loadConfigurationFile ("inflation_layer.xml");
-
-    double inflation_radius_ = parameter.getParameter ("inflation_radius", 0.55f);
-
-    double cost_scaling_factor_ = parameter.getParameter ("cost_scaling_factor", 10.0f);
-
+    
+    double inflation_radius_ = parameter.getParameter ("inflation_radius",
+                                                       0.55f);
+    
+    double cost_scaling_factor_ = parameter.getParameter ("cost_scaling_factor",
+                                                          10.0f);
+    
     matchSize ();
-
+    
     setInflationParameters (inflation_radius_, cost_scaling_factor_);
   }
   
@@ -117,11 +119,11 @@ namespace NS_CostMap
     computeCaches ();
     need_reinflation_ = true;
     /*
-    NS_NaviCommon::console.debug (
-        "InflationLayer::onFootprintChanged(): footprint points: %lu, inscribed_radius_ = %.3f, inflation_radius_ = %.3f",
-        layered_costmap_->getFootprint ().size (), inscribed_radius_,
-        inflation_radius_);
-        */
+     NS_NaviCommon::console.debug (
+     "InflationLayer::onFootprintChanged(): footprint points: %lu, inscribed_radius_ = %.3f, inflation_radius_ = %.3f",
+     layered_costmap_->getFootprint ().size (), inscribed_radius_,
+     inflation_radius_);
+     */
   }
   
   void

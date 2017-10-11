@@ -118,7 +118,8 @@ namespace NS_Planner
       }
       else
       {
-        printf ("Trajectory Rollout planner initialized with param meter_scoring set to false. Set it to true to make your settins robust against changes of costmap resolution.\n");
+        printf (
+            "Trajectory Rollout planner initialized with param meter_scoring set to false. Set it to true to make your settins robust against changes of costmap resolution.\n");
       }
       
       heading_lookahead = parameter.getParameter ("heading_lookahead", 0.325f);
@@ -149,7 +150,8 @@ namespace NS_Planner
       backup_vel = parameter.getParameter ("escape_vel", -0.1f);
       
       if (backup_vel >= 0.0)
-        printf ("You've specified a positive escape velocity. This is probably not what you want and will cause the robot to move forward instead of backward. You should probably change your escape_vel parameter to be negative\n");
+        printf (
+            "You've specified a positive escape velocity. This is probably not what you want and will cause the robot to move forward instead of backward. You should probably change your escape_vel parameter to be negative\n");
       
       if (parameter.getParameter ("dwa", 1) == 1)
       {
@@ -249,7 +251,8 @@ namespace NS_Planner
     //if we have a valid command, we'll pass it on, otherwise we'll command all zeros
     if (valid_cmd)
     {
-      printf ("Slowing down... using vx, vy, vth: %.2f, %.2f, %.2f\n", vx, vy, vth);
+      printf ("Slowing down... using vx, vy, vth: %.2f, %.2f, %.2f\n", vx, vy,
+              vth);
       cmd_vel.linear.x = vx;
       cmd_vel.linear.y = vy;
       cmd_vel.angular.z = vth;
@@ -310,7 +313,7 @@ namespace NS_Planner
                                            vel_yaw, 0.0, 0.0, v_theta_samp);
     
     printf ("Moving to desired goal orientation, th cmd: %.2f, valid_cmd: %d\n",
-        v_theta_samp, valid_cmd);
+            v_theta_samp, valid_cmd);
     
     if (valid_cmd)
     {
@@ -329,7 +332,8 @@ namespace NS_Planner
   {
     if (!isInitialized ())
     {
-      printf ("This planner has not been initialized, please call initialize() before using this planner\n");
+      printf (
+          "This planner has not been initialized, please call initialize() before using this planner\n");
       return false;
     }
     
@@ -349,7 +353,8 @@ namespace NS_Planner
   {
     if (!isInitialized ())
     {
-      printf ("This planner has not been initialized, please call initialize() before using this planner\n");
+      printf (
+          "This planner has not been initialized, please call initialize() before using this planner\n");
       return false;
     }
     
@@ -365,7 +370,8 @@ namespace NS_Planner
     if (!transformGlobalPlan (global_plan_, global_pose, *costmap_,
                               transformed_plan))
     {
-      printf ("Could not transform the global plan to the frame of the controller\n");
+      printf (
+          "Could not transform the global plan to the frame of the controller\n");
       return false;
     }
     
@@ -476,12 +482,14 @@ namespace NS_Planner
     //if we cannot move... tell someone
     if (path.cost_ < 0)
     {
-      printf ("The rollout planner failed to find a valid plan. This means that the footprint of the robot was in collision for all simulated trajectories.\n");
+      printf (
+          "The rollout planner failed to find a valid plan. This means that the footprint of the robot was in collision for all simulated trajectories.\n");
       local_plan.clear ();
       return false;
     }
     
-    printf ("A valid velocity command of (%.2f, %.2f, %.2f) was found for this cycle.\n",
+    printf (
+        "A valid velocity command of (%.2f, %.2f, %.2f) was found for this cycle.\n",
         cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
     
     // Fill out the local plan
@@ -534,7 +542,8 @@ namespace NS_Planner
           base_odom.twist.angular.z, vx_samp, vy_samp, vtheta_samp);
       
     }
-    printf ("Failed to get the pose of the robot. No trajectories will pass as legal in this case.\n");
+    printf (
+        "Failed to get the pose of the robot. No trajectories will pass as legal in this case.\n");
     return false;
   }
   
@@ -571,7 +580,8 @@ namespace NS_Planner
           base_odom.twist.angular.z, vx_samp, vy_samp, vtheta_samp);
       
     }
-    printf ("Failed to get the pose of the robot. No trajectories will pass as legal in this case.\n");
+    printf (
+        "Failed to get the pose of the robot. No trajectories will pass as legal in this case.\n");
     return -1.0;
   }
   
@@ -580,7 +590,8 @@ namespace NS_Planner
   {
     if (!isInitialized ())
     {
-      printf ("This planner has not been initialized, please call initialize() before using this planner.\n");
+      printf (
+          "This planner has not been initialized, please call initialize() before using this planner.\n");
       return false;
     }
     //return flag set in controller

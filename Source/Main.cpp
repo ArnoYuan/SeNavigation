@@ -25,36 +25,36 @@ signalAction (int signal)
 void
 registerSignal ()
 {
-        //signal (SIGINT, signalAction);
-        //signal (SIGKILL, signalAction);
-        //signal (SIGQUIT, signalAction);
-        //signal (SIGTERM, signalAction);
-        signal (SIGUSR1, signalAction);
+  //signal (SIGINT, signalAction);
+  //signal (SIGKILL, signalAction);
+  //signal (SIGQUIT, signalAction);
+  //signal (SIGTERM, signalAction);
+  signal (SIGUSR1, signalAction);
 }
 
 int
 main (int argc, char* argv[])
 {
   app = new NavigationApplication;
-
+  
   registerSignal ();
-
+  
   if (!app->initialize (argc, argv))
   {
-        exit (EXIT_FAILURE);
-        return 0;
+    exit (EXIT_FAILURE);
+    return 0;
   }
-
+  
   app->run ();
-
-  if (!app->isRunning())
+  
+  if (!app->isRunning ())
   {
-        exit (EXIT_FAILURE);
-        return 0;
+    exit (EXIT_FAILURE);
+    return 0;
   }
-
+  
   app->pending ();
-
+  
   exit (EXIT_SUCCESS);
   return 0;
 }

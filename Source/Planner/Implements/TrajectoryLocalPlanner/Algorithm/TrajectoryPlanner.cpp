@@ -353,7 +353,7 @@ namespace NS_Planner
     }
     return DBL_MAX;
   }
-
+  
   //calculate the cost of a ray-traced line
   double
   TrajectoryPlanner::lineCost (int x0, int x1, int y0, int y1)
@@ -505,9 +505,9 @@ namespace NS_Planner
     {
       return true;
     }
-
-    printf ("Invalid Trajectory %f, %f, %f, cost: %f\n",
-                                    vx_samp, vy_samp, vtheta_samp, cost);
+    
+    printf ("Invalid Trajectory %f, %f, %f, cost: %f\n", vx_samp, vy_samp,
+            vtheta_samp, cost);
     
     //otherwise the check fails
     return false;
@@ -673,7 +673,7 @@ namespace NS_Planner
     
     //let's try to rotate toward open space
     double heading_dist = DBL_MAX;
-
+    
     for (int i = 0; i < vtheta_samples_; ++i)
     {
       //enforce a minimum rotational velocity because the base can't handle small in-place rotations
@@ -1021,7 +1021,7 @@ namespace NS_Planner
     goal_map_.setLocalGoal (costmap_, global_plan_);
     
     printf ("Path/Goal distance computed\n");
-
+    
     //rollout trajectories and find the minimum cost one
     Trajectory best = createTrajectories (pos[0], pos[1], pos[2], vel[0],
                                           vel[1], vel[2], acc_lim_x_,

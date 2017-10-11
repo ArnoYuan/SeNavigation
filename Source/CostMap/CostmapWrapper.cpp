@@ -40,10 +40,12 @@ namespace NS_CostMap
         cost_translation_table[i] = char (1 + (97 * (i - 1)) / 251);
       }
     }
-
-    odom_tf_cli = new NS_Service::Client<NS_ServiceType::ServiceTransform> ("BASE_ODOM_TF");
-
-    map_tf_cli = new NS_Service::Client<NS_ServiceType::ServiceTransform> ("ODOM_MAP_TF");
+    
+    odom_tf_cli = new NS_Service::Client<NS_ServiceType::ServiceTransform> (
+        "BASE_ODOM_TF");
+    
+    map_tf_cli = new NS_Service::Client<NS_ServiceType::ServiceTransform> (
+        "ODOM_MAP_TF");
   }
   
   CostmapWrapper::~CostmapWrapper ()
@@ -53,9 +55,9 @@ namespace NS_CostMap
     
     if (cost_translation_table)
       delete cost_translation_table;
-
+    
     delete odom_tf_cli;
-
+    
     delete map_tf_cli;
   }
   
@@ -243,27 +245,29 @@ namespace NS_CostMap
     loadParameters ();
     
     layered_costmap = new LayeredCostmap (track_unknown_space_);
-
+    
     if (layered_costmap)
     {
       StaticLayer* static_layer = new StaticLayer ();
       boost::shared_ptr<Layer> layer (static_layer);
       layered_costmap->addPlugin (layer);
     }
-
+    
     if (layered_costmap)
     {
       InflationLayer* inflation_layer = new InflationLayer ();
       boost::shared_ptr<Layer> layer (inflation_layer);
       layered_costmap->addPlugin (layer);
     }
-
-    std::vector <boost::shared_ptr<Layer> > *layers = layered_costmap->getPlugins();
-    for (std::vector <boost::shared_ptr<Layer> >::iterator layer = layers->begin(); layer != layers->end (); ++layer)
+    
+    std::vector<boost::shared_ptr<Layer> > *layers =
+        layered_costmap->getPlugins ();
+    for (std::vector<boost::shared_ptr<Layer> >::iterator layer =
+        layers->begin (); layer != layers->end (); ++layer)
     {
       (*layer)->initialize (layered_costmap);
     }
-
+    
     xn = yn = 0;
     x0 = layered_costmap->getCostmap ()->getSizeInCellsX ();
     y0 = layered_costmap->getCostmap ()->getSizeInCellsY ();
@@ -280,7 +284,7 @@ namespace NS_CostMap
         (unsigned int) (map_width_meters_ / resolution_),
         (unsigned int) (map_height_meters_ / resolution_), resolution_,
         origin_x_, origin_y_);
-
+    
   }
   
   void
@@ -288,10 +292,12 @@ namespace NS_CostMap
   {
     printf ("costmap is running!\n");
     
-    std::vector <boost::shared_ptr<Layer> > *layers = layered_costmap->getPlugins();
-    for (std::vector <boost::shared_ptr<Layer> >::iterator layer = layers->begin(); layer != layers->end (); ++layer)
+    std::vector<boost::shared_ptr<Layer> > *layers =
+        layered_costmap->getPlugins ();
+    for (std::vector<boost::shared_ptr<Layer> >::iterator layer =
+        layers->begin (); layer != layers->end (); ++layer)
     {
-      (*layer)->activate();
+      (*layer)->activate ();
     }
     
     running = true;
@@ -306,10 +312,12 @@ namespace NS_CostMap
   {
     printf ("costmap is quitting!\n");
     
-    std::vector <boost::shared_ptr<Layer> > *layers = layered_costmap->getPlugins();
-    for (std::vector <boost::shared_ptr<Layer> >::iterator layer = layers->begin(); layer != layers->end (); ++layer)
+    std::vector<boost::shared_ptr<Layer> > *layers =
+        layered_costmap->getPlugins ();
+    for (std::vector<boost::shared_ptr<Layer> >::iterator layer =
+        layers->begin (); layer != layers->end (); ++layer)
     {
-      (*layer)->deactivate();
+      (*layer)->deactivate ();
     }
     
     running = false;

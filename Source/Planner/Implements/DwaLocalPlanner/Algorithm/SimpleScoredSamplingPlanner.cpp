@@ -126,8 +126,8 @@ namespace NS_Planner
           traj.addPoint (px, py, pth);
         }
       }
-      printf ("Evaluated %d trajectories, found %d valid\n",
-                                    count, count_valid);
+      printf ("Evaluated %d trajectories, found %d valid\n", count,
+              count_valid);
       if (best_traj_cost >= 0)
       {
         // do not try fallback generators

@@ -110,7 +110,7 @@ namespace NS_CostMap
     LayeredCostmap* layered_costmap_;
     bool current_;
     bool enabled_; ///< Currently this var is managed by subclasses. TODO: make this managed by this class and/or container class.
-
+    
   private:
     std::vector<NS_DataType::Point> footprint_spec_;
   };

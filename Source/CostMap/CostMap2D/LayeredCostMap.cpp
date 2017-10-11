@@ -71,9 +71,9 @@ namespace NS_CostMap
           || maxy_ < prev_maxy)
       {
         printf ("Illegal bounds change, was [tl: (%f, %f), br: (%f, %f)], but "
-            "is now [tl: (%f, %f), br: (%f, %f)].\n",
-            prev_minx, prev_miny, prev_maxx, prev_maxy, minx_, miny_, maxx_,
-            maxy_);
+                "is now [tl: (%f, %f), br: (%f, %f)].\n",
+                prev_minx, prev_miny, prev_maxx, prev_maxy, minx_, miny_, maxx_,
+                maxy_);
       }
     }
     
@@ -86,8 +86,7 @@ namespace NS_CostMap
     y0 = std::max (0, y0);
     yn = std::min (int (costmap_.getSizeInCellsY ()), yn + 1);
     
-    printf ("Updating area x: [%d, %d] y: [%d, %d]\n", x0,
-                                  xn, y0, yn);
+    printf ("Updating area x: [%d, %d] y: [%d, %d]\n", x0, xn, y0, yn);
     
     if (xn < x0 || yn < y0)
       return;

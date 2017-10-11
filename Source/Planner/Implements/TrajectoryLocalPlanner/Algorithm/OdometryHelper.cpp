@@ -2,20 +2,20 @@
 #include <DataSet/DataType/Odometry.h>
 #include "OdometryHelper.h"
 
-
 namespace NS_Planner
 {
   
   OdometryHelper::OdometryHelper ()
   {
-    odom_cli = new NS_Service::Client<NS_ServiceType::ServiceOdometry> ("BASE_ODOM");
+    odom_cli = new NS_Service::Client<NS_ServiceType::ServiceOdometry> (
+        "BASE_ODOM");
   }
   
   OdometryHelper::~OdometryHelper ()
   {
     delete odom_cli;
   }
-
+  
   void
   OdometryHelper::getRobotVel (
       NS_Transform::Stamped<NS_Transform::Pose>& robot_vel)

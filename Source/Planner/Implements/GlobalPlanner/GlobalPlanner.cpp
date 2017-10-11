@@ -139,18 +139,18 @@ namespace NS_Planner
 //		NS_NaviCommon::console.debug("A lot of parameters...");
       
 //		NS_NaviCommon::console.debug("Finish onInitialize called");
-
+      
       int lethal_cost = parameter.getParameter ("lethal_cost", 253);
       int neutral_cost = parameter.getParameter ("neutral_cost", 50);
       double cost_factor = parameter.getParameter ("cost_factor", 3.0f);
       int orientation_mode = parameter.getParameter ("orientation_mode", 1);
-
+      
       planner_->setLethalCost (lethal_cost);
       path_maker_->setLethalCost (lethal_cost);
       planner_->setNeutralCost (neutral_cost);
       planner_->setFactor (cost_factor);
       orientation_filter_->setMode (orientation_mode);
-
+      
       initialized_ = true;
     }
     else
@@ -171,7 +171,8 @@ namespace NS_Planner
     
     if (!initialized_)
     {
-      printf ("This planner has not been initialized yet, but it is being used, please call initialize() before use\n");
+      printf (
+          "This planner has not been initialized yet, but it is being used, please call initialize() before use\n");
       return false;
     }
     
@@ -207,7 +208,8 @@ namespace NS_Planner
                                                                    start_y_i))
     {
       // 加一下错误提示
-      printf ("The robot's start position is off the global costmap. Planning will always fail, are you sure the robot has been properly localized?\n");
+      printf (
+          "The robot's start position is off the global costmap. Planning will always fail, are you sure the robot has been properly localized?\n");
       return false;
     }
     //默认 old_navfn_behavior = false
@@ -229,7 +231,8 @@ namespace NS_Planner
                                                                    goal_y_i))
     {
       // 加一下错误提示
-      printf ("The goal sent to the global planner is off the global costmap. Planning will always fail to this goal.\n");
+      printf (
+          "The goal sent to the global planner is off the global costmap. Planning will always fail to this goal.\n");
       return false;
     }
     worldToMap (wx, wy, goal_x, goal_y);
@@ -300,7 +303,8 @@ namespace NS_Planner
       else
       {
         // 错误提示
-        printf ("Failed to get a plan from potential when a legal potential was found. This shouldn't happen.\n");
+        printf (
+            "Failed to get a plan from potential when a legal potential was found. This shouldn't happen.\n");
       }
     }
     else
@@ -322,7 +326,8 @@ namespace NS_Planner
     if (!initialized_)
     {
       // 错误提示
-      printf ("This planner has not been initialized yet, but it is being used, please call initialize() before use\n");
+      printf (
+          "This planner has not been initialized yet, but it is being used, please call initialize() before use\n");
       return;
     }
     
@@ -340,7 +345,8 @@ namespace NS_Planner
     if (!initialized_)
     {
       // 错误提示
-      printf ("This planner has not been initialized yet, but it is being used, please call initialize() before use\n");
+      printf (
+          "This planner has not been initialized yet, but it is being used, please call initialize() before use\n");
       return false;
     }
     

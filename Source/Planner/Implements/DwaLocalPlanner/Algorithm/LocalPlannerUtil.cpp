@@ -85,10 +85,11 @@ namespace NS_Planner
       std::vector<NS_DataType::PoseStamped>& transformed_plan)
   {
     //get the global plan in our frame
-    if (!NS_Planner::transformGlobalPlan (global_plan_, global_pose,
-                                          *costmap_, transformed_plan))
+    if (!NS_Planner::transformGlobalPlan (global_plan_, global_pose, *costmap_,
+                                          transformed_plan))
     {
-      printf ("Could not transform the global plan to the frame of the controller\n");
+      printf (
+          "Could not transform the global plan to the frame of the controller\n");
       return false;
     }
     

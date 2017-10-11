@@ -9,7 +9,6 @@
 #include <Service/ServiceType/ServiceOdometry.h>
 #include <Service/Client.h>
 
-
 namespace NS_Planner
 {
   
@@ -23,7 +22,7 @@ namespace NS_Planner
      *        subscription is done. */
     OdometryHelper ();
     ~OdometryHelper ();
-    
+
     /**
      * @brief  Callback for receiving odometry data
      * @param msg An Odometry message
@@ -37,7 +36,7 @@ namespace NS_Planner
   private:
     NS_DataType::Odometry base_odom_;
     NS_Service::Client<NS_ServiceType::ServiceOdometry>* odom_cli;
-
+    
   };
 
 } /* namespace base_local_planner */

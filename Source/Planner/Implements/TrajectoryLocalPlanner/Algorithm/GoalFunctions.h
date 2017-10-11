@@ -63,7 +63,8 @@ namespace NS_Planner
    * @param transformed_plan Populated with the transformed plan
    */
   bool
-  transformGlobalPlan (const std::vector<NS_DataType::PoseStamped>& global_plan,
+  transformGlobalPlan (
+      const std::vector<NS_DataType::PoseStamped>& global_plan,
       const NS_Transform::Stamped<NS_Transform::Pose>& global_robot_pose,
       const NS_CostMap::Costmap2D& costmap,
       std::vector<NS_DataType::PoseStamped>& transformed_plan);

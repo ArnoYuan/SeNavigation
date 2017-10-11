@@ -185,7 +185,7 @@ namespace NS_Planner
     if (adjusted_global_plan.size () != global_plan.size ())
     {
       printf ("Adjusted global plan resolution, added %zu points\n",
-          adjusted_global_plan.size () - global_plan.size ());
+              adjusted_global_plan.size () - global_plan.size ());
     }
     unsigned int i;
     // put global path points into local map until we reach the border of the local map
@@ -210,7 +210,8 @@ namespace NS_Planner
     }
     if (!started_path)
     {
-      printf ("None of the %d first of %zu (%zu) points of the global plan were in the local costmap and free\n",
+      printf (
+          "None of the %d first of %zu (%zu) points of the global plan were in the local costmap and free\n",
           i, adjusted_global_plan.size (), global_plan.size ());
       return;
     }
@@ -257,7 +258,8 @@ namespace NS_Planner
     }
     if (!started_path)
     {
-      printf ("None of the points of the global plan were in the local costmap, global plan points too far from robot\n");
+      printf (
+          "None of the points of the global plan were in the local costmap, global plan points too far from robot\n");
       return;
     }
     

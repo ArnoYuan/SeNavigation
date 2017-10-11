@@ -108,7 +108,8 @@ namespace NS_Planner
       //just rotate in place
       if (latch_xy_goal_tolerance_ && !xy_tolerance_latch_)
       {
-        printf ("Goal position reached (check), stopping and turning in place\n");
+        printf (
+            "Goal position reached (check), stopping and turning in place\n");
         xy_tolerance_latch_ = true;
       }
       double goal_th = NS_Transform::getYaw (goal_pose.getRotation ());
@@ -165,7 +166,8 @@ namespace NS_Planner
     //if we have a valid command, we'll pass it on, otherwise we'll command all zeros
     if (valid_cmd)
     {
-      printf ("Slowing down... using vx, vy, vth: %.2f, %.2f, %.2f\n", vx, vy, vth);
+      printf ("Slowing down... using vx, vy, vth: %.2f, %.2f, %.2f\n", vx, vy,
+              vth);
       cmd_vel.linear.x = vx;
       cmd_vel.linear.y = vy;
       cmd_vel.angular.z = vth;
@@ -229,7 +231,8 @@ namespace NS_Planner
     
     if (valid_cmd)
     {
-      printf ("Moving to desired goal orientation, th cmd: %.2f, valid_cmd: %d\n",
+      printf (
+          "Moving to desired goal orientation, th cmd: %.2f, valid_cmd: %d\n",
           v_theta_samp, valid_cmd);
       cmd_vel.angular.z = v_theta_samp;
       return true;
@@ -282,8 +285,7 @@ namespace NS_Planner
     }
     else
     {
-      printf ("Angle: %f Tolerance: %f\n", angle,
-                                    limits.yaw_goal_tolerance);
+      printf ("Angle: %f Tolerance: %f\n", angle, limits.yaw_goal_tolerance);
       NS_Transform::Stamped<NS_Transform::Pose> robot_vel;
       odom_helper_.getRobotVel (robot_vel);
       NS_DataType::Odometry base_odom;

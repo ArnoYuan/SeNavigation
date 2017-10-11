@@ -165,9 +165,8 @@ namespace NS_Planner
     {
       return true;
     }
-    printf ("Invalid Trajectory %f, %f, %f, cost: %f\n",
-                                    vel_samples[0], vel_samples[1],
-                                    vel_samples[2], cost);
+    printf ("Invalid Trajectory %f, %f, %f, cost: %f\n", vel_samples[0],
+            vel_samples[1], vel_samples[2], cost);
     
     //otherwise the check fails
     return false;

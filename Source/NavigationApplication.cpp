@@ -21,9 +21,10 @@ namespace NS_Navigation
   NavigationApplication::NavigationApplication ()
   {
     new_goal_trigger = false;
-
+    
     twist_pub = new NS_DataSet::Publisher<NS_DataType::Twist> ("TWIST");
-    goal_sub = new NS_DataSet::Subscriber<NS_DataType::PoseStamped> ("GOAL", boost::bind(&NavigationApplication::goalCallback, this, _1));
+    goal_sub = new NS_DataSet::Subscriber<NS_DataType::PoseStamped> (
+        "GOAL", boost::bind (&NavigationApplication::goalCallback, this, _1));
   }
   
   NavigationApplication::~NavigationApplication ()
@@ -36,17 +37,18 @@ namespace NS_Navigation
   NavigationApplication::loadParameters ()
   {
     NS_NaviCommon::Parameter parameter;
-
+    
     parameter.loadConfigurationFile ("navigation.xml");
-
+    
     global_planner_type_ = parameter.getParameter ("global_planner_type",
                                                    "global_planner");
     
     local_planner_type_ = parameter.getParameter ("local_planner_type",
                                                   "trajectory_local_planner");
-
+    
     planner_frequency_ = parameter.getParameter ("planner_frequency", 0.0f);
-    controller_frequency_ = parameter.getParameter ("controller_frequency", 10.0f);
+    controller_frequency_ = parameter.getParameter ("controller_frequency",
+                                                    10.0f);
   }
   
   bool
@@ -73,34 +75,34 @@ namespace NS_Navigation
     //if the planner fails or returns a zero length plan, planning failed
     if (!global_planner->makePlan (start, goal, plan) || plan.empty ())
     {
-      console.warning (
-          "Failed to find a  plan to point (%.2f, %.2f)", goal.pose.position.x,
-          goal.pose.position.y);
+      console.warning ("Failed to find a  plan to point (%.2f, %.2f)",
+                       goal.pose.position.x, goal.pose.position.y);
       return false;
     }
     
     console.debug ("Plans computed, %d points to go...", plan.size ());
     for (size_t i = 0; i < plan.size (); i++)
     {
-      console.debug ("[%d] x = %lf, y = %lf", (i + 1), plan[i].pose.position.x, plan[i].pose.position.y);
+      console.debug ("[%d] x = %lf, y = %lf", (i + 1), plan[i].pose.position.x,
+                     plan[i].pose.position.y);
     }
-
+    
     return true;
   }
   
   void
   NavigationApplication::runRecovery ()
   {
-
+    
   }
-
+  
   void
   NavigationApplication::resetState ()
   {
     state = PLANNING;
     publishZeroVelocity ();
   }
-
+  
   void
   NavigationApplication::controlLoop ()
   {
@@ -108,47 +110,52 @@ namespace NS_Navigation
     {
       NS_NaviCommon::Rate rate (controller_frequency_);
       controller_mutex.lock ();
-      while ((state != CONTROLLING || global_planner_plan->size () == 0) && running)
+      while ((state != CONTROLLING || global_planner_plan->size () == 0)
+          && running)
       {
-        controller_cond.timed_wait (controller_mutex,
-                              (boost::get_system_time () + boost::posix_time::milliseconds (PLANNER_LOOP_TIMEOUT)));
+        controller_cond.timed_wait (
+            controller_mutex,
+            (boost::get_system_time ()
+                + boost::posix_time::milliseconds (PLANNER_LOOP_TIMEOUT)));
       }
       controller_mutex.unlock ();
-
+      
       if (!running)
       {
         console.message ("Quit local planning loop...");
         break;
       }
-
+      
       if (!local_planner->setPlan (*global_planner_plan))
       {
         console.error ("Set plan to local planner failure!");
         resetState ();
         continue;
       }
-
+      
       while (running)
       {
         NS_DataType::Twist cmd_vel;
         NS_NaviCommon::Time last_valid_control;
-
+        
         //update feedback to correspond to our curent position
         NS_Transform::Stamped<NS_Transform::Pose> global_pose;
         global_costmap->getRobotPose (global_pose);
         NS_DataType::PoseStamped current_position;
         NS_Transform::poseStampedTFToMsg (global_pose, current_position);
-
-        if (distance (current_position, oscillation_pose_) >= oscillation_distance_)
+        
+        if (distance (current_position, oscillation_pose_)
+            >= oscillation_distance_)
         {
           //TODO: oscillation
-
+          
           oscillation_pose_ = current_position;
         }
-
+        
         switch (state)
         {
-          case PLANNING:break;
+          case PLANNING:
+            break;
           case CONTROLLING:
             if (local_planner->isGoalReached ())
             {
@@ -156,21 +163,25 @@ namespace NS_Navigation
               resetState ();
               break;
             }
-
+            
             //TODO : check oscillation and clear
-
+            
             if (local_planner->computeVelocityCommands (cmd_vel))
             {
-              console.debug ("Got velocity data : l_x=%.3lf, l_y=%.3lf, a_z=%.3lf!",
-                                            cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
+              console.debug (
+                  "Got velocity data : l_x=%.3lf, l_y=%.3lf, a_z=%.3lf!",
+                  cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
               last_valid_control = NS_NaviCommon::Time::now ();
-              publishVelocity (cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
+              publishVelocity (cmd_vel.linear.x, cmd_vel.linear.y,
+                               cmd_vel.angular.z);
             }
             else
             {
-              console.warning ("The planner can not got a valid velocity data!");
-              NS_NaviCommon::Time next_control = last_valid_control + NS_NaviCommon::Duration (controller_patience_);
-
+              console.warning (
+                  "The planner can not got a valid velocity data!");
+              NS_NaviCommon::Time next_control = last_valid_control
+                  + NS_NaviCommon::Duration (controller_patience_);
+              
               if (NS_NaviCommon::Time::now () > next_control)
               {
                 publishZeroVelocity ();
@@ -180,61 +191,63 @@ namespace NS_Navigation
               else
               {
                 //TODO: re-plan
-
+                
                 publishZeroVelocity ();
                 state = PLANNING;
                 resetState ();
               }
             }
-
+            
             break;
           case CLEARING:
             runRecovery ();
             state = PLANNING;
             break;
         }
-
+        
         rate.sleep ();
       }
     }
   }
-
+  
   void
   NavigationApplication::planLoop ()
   {
     NS_NaviCommon::Rate rate (planner_frequency_);
-
+    
     while (running)
     {
       planner_mutex.lock ();
       while (!new_goal_trigger && running)
       {
-        planner_cond.timed_wait (planner_mutex,
-                                 (boost::get_system_time () + boost::posix_time::milliseconds (PLANNER_LOOP_TIMEOUT)));
+        planner_cond.timed_wait (
+            planner_mutex,
+            (boost::get_system_time ()
+                + boost::posix_time::milliseconds (PLANNER_LOOP_TIMEOUT)));
       }
       planner_mutex.unlock ();
-
+      
       if (!running)
       {
         console.message ("Quit global planning loop...");
         break;
       }
-
+      
       new_goal_trigger = false;
-
+      
       if (!makePlan (goal, *latest_plan) && state != PLANNING)
       {
         console.error ("Make plan failure!");
         continue;
       }
-
+      
       controller_mutex.lock ();
       state = CONTROLLING;
       global_planner_plan->clear ();
       global_planner_plan->assign (latest_plan->begin (), latest_plan->end ());
       controller_cond.notify_one ();
       controller_mutex.unlock ();
-
+      
       if (planner_frequency_ != 0.0f)
         rate.sleep ();
     }
@@ -246,8 +259,10 @@ namespace NS_Navigation
     NS_Transform::Stamped<NS_Transform::Pose> goal_pose, global_pose;
     poseStampedMsgToTF (goal, goal_pose);
     
-    NS_Service::Client<NS_ServiceType::ServiceTransform> odom_tf_cli ("BASE_ODOM_TF");
-    NS_Service::Client<NS_ServiceType::ServiceTransform> map_tf_cli ("ODOM_MAP_TF");
+    NS_Service::Client<NS_ServiceType::ServiceTransform> odom_tf_cli (
+        "BASE_ODOM_TF");
+    NS_Service::Client<NS_ServiceType::ServiceTransform> map_tf_cli (
+        "ODOM_MAP_TF");
     NS_ServiceType::ServiceTransform odom_transform;
     NS_ServiceType::ServiceTransform map_transform;
     
@@ -283,25 +298,26 @@ namespace NS_Navigation
       console.error ("It's a illegal pose!");
       return;
     }
-
+    
     NS_DataType::PoseStamped new_goal = goalToGlobalFrame (target_goal);
-
+    
     planner_mutex.lock ();
     goal = new_goal;
     new_goal_trigger = true;
     state = PLANNING;
     planner_cond.notify_one ();
-    planner_mutex.unlock();
+    planner_mutex.unlock ();
   }
   
   void
   NavigationApplication::publishZeroVelocity ()
   {
-    publishVelocity(0, 0, 0);
+    publishVelocity (0, 0, 0);
   }
-
+  
   void
-  NavigationApplication::publishVelocity (double linear_x, double linear_y, double angular_z)
+  NavigationApplication::publishVelocity (double linear_x, double linear_y,
+                                          double angular_z)
   {
     NS_DataType::Twist vel;
     vel.linear.x = linear_x;
@@ -309,7 +325,7 @@ namespace NS_Navigation
     vel.angular.z = angular_z;
     twist_pub->publish (vel);
   }
-
+  
   bool
   NavigationApplication::isQuaternionValid (const NS_DataType::Quaternion& q)
   {
@@ -361,17 +377,17 @@ namespace NS_Navigation
   NavigationApplication::run ()
   {
     loadParameters ();
-
+    
     //set up plan triple buffer
     global_planner_plan = new std::vector<NS_DataType::PoseStamped> ();
     latest_plan = new std::vector<NS_DataType::PoseStamped> ();
-
+    
     /*
      * make global planner and global costmap
      */
     global_costmap = new NS_CostMap::CostmapWrapper ();
     global_costmap->initialize ();
-
+    
     //load global planner
     if (global_planner_type_ == "global_planner")
     {
@@ -381,15 +397,15 @@ namespace NS_Navigation
     {
       global_planner = new NS_Planner::GlobalPlanner ();
     }
-
+    
     global_planner->initialize (global_costmap);
-
+    
     /*
      * make local planner and local costmap
      */
     local_costmap = new NS_CostMap::CostmapWrapper ();
     local_costmap->initialize ();
-
+    
     //load local planner
     if (local_planner_type_ == "trajectory_local_planner")
     {
@@ -403,13 +419,13 @@ namespace NS_Navigation
     {
       local_planner = new NS_Planner::TrajectoryLocalPlanner ();
     }
-
+    
     local_planner->initialize (global_costmap);
-
+    
     state = PLANNING;
-
+    
     new_goal_trigger = false;
-
+    
     NS_Service::Client<NS_ServiceType::ServiceMap> map_cli ("MAP");
     for (int i = 0; i < 10; i++)
     {
@@ -422,12 +438,12 @@ namespace NS_Navigation
         }
       }
     }
-
+    
     running = true;
-
+    
     plan_thread = boost::thread (
         boost::bind (&NavigationApplication::planLoop, this));
-
+    
     control_thread = boost::thread (
         boost::bind (&NavigationApplication::controlLoop, this));
     

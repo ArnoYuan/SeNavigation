@@ -29,8 +29,8 @@ namespace NS_Navigation
     PLANNING, CONTROLLING, CLEARING,
   };
   
-  #define PLANNER_LOOP_TIMEOUT 100
-
+#define PLANNER_LOOP_TIMEOUT 100
+  
   class NavigationApplication: public Application
   {
   public:
@@ -78,10 +78,12 @@ namespace NS_Navigation
     std::string global_planner_type_;
     std::string local_planner_type_;
 
-    double planner_frequency_, controller_frequency_, inscribed_radius_, circumscribed_radius_;
+    double planner_frequency_, controller_frequency_, inscribed_radius_,
+        circumscribed_radius_;
     double planner_patience_, controller_patience_;
     double conservative_reset_dist_, clearing_radius_;
-    bool shutdown_costmaps_, clearing_rotation_allowed_, recovery_behavior_enabled_;
+    bool shutdown_costmaps_, clearing_rotation_allowed_,
+        recovery_behavior_enabled_;
     double oscillation_timeout_, oscillation_distance_;
 
   private:

@@ -57,8 +57,7 @@ namespace NS_Planner
     if (footprint_spec_.size () == 0)
     {
       // Bug, should never happen
-      printf (
-          "Footprint spec is empty, maybe missing call to setFootprint?\n");
+      printf ("Footprint spec is empty, maybe missing call to setFootprint?\n");
       return -9;
     }
     

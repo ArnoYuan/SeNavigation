@@ -167,17 +167,16 @@ namespace NS_CostMap
     
     if (error != "")
     {
-      printf ("Error parsing footprint parameter: '%s'\n",
-                                    error.c_str ());
-      printf ("  Footprint string was '%s'.\n",
-                                    footprint_string.c_str ());
+      printf ("Error parsing footprint parameter: '%s'\n", error.c_str ());
+      printf ("  Footprint string was '%s'.\n", footprint_string.c_str ());
       return false;
     }
     
     // convert vvf into points.
     if (vvf.size () < 3)
     {
-      printf ("You must specify at least three points for the robot footprint, reverting to previous footprint.\n");
+      printf (
+          "You must specify at least three points for the robot footprint, reverting to previous footprint.\n");
       return false;
     }
     footprint.reserve (vvf.size ());
@@ -193,7 +192,8 @@ namespace NS_CostMap
       }
       else
       {
-        printf ("Points in the footprint specification must be pairs of numbers.  Found a point with %d numbers.\n",
+        printf (
+            "Points in the footprint specification must be pairs of numbers.  Found a point with %d numbers.\n",
             int (vvf[i].size ()));
         return false;
       }

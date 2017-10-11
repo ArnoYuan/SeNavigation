@@ -142,7 +142,8 @@ namespace NS_Planner
   {
     if (!isInitialized ())
     {
-      printf ("This planner has not been initialized, please call initialize() before using this planner\n");
+      printf (
+          "This planner has not been initialized, please call initialize() before using this planner\n");
       return false;
     }
     //when we get a new plan, we also want to clear any latch we may have on goal tolerances
@@ -157,7 +158,8 @@ namespace NS_Planner
   {
     if (!isInitialized ())
     {
-      printf ("This planner has not been initialized, please call initialize() before using this planner\n");
+      printf (
+          "This planner has not been initialized, please call initialize() before using this planner\n");
       return false;
     }
     if (!costmap->getRobotPose (current_pose_))
@@ -187,7 +189,8 @@ namespace NS_Planner
     // dynamic window sampling approach to get useful velocity commands
     if (!isInitialized ())
     {
-      printf ("This planner has not been initialized, please call initialize() before using this planner\n");
+      printf (
+          "This planner has not been initialized, please call initialize() before using this planner\n");
       return false;
     }
     
@@ -225,12 +228,14 @@ namespace NS_Planner
     std::vector<NS_DataType::PoseStamped> local_plan;
     if (path.cost_ < 0)
     {
-      printf ("The dwa local planner failed to find a valid plan, cost functions discarded all candidates. This can mean there is an obstacle too close to the robot.\n");
+      printf (
+          "The dwa local planner failed to find a valid plan, cost functions discarded all candidates. This can mean there is an obstacle too close to the robot.\n");
       local_plan.clear ();
       return false;
     }
     
-    printf ("A valid velocity command of (%.2f, %.2f, %.2f) was found for this cycle.\n",
+    printf (
+        "A valid velocity command of (%.2f, %.2f, %.2f) was found for this cycle.\n",
         cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
     
     // Fill out the local plan
@@ -275,7 +280,7 @@ namespace NS_Planner
       return false;
     }
     printf ("Received a transformed plan with %zu points.\n",
-        transformed_plan.size ());
+            transformed_plan.size ());
     
     // update plan in dwa_planner even if we just stop and rotate, to allow checkTrajectory
     dp_->updatePlanAndLocalCosts (current_pose_, transformed_plan);
