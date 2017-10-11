@@ -9,7 +9,7 @@
 
 namespace NS_Planner
 {
-  
+
   /**
    * @class SimpleScoredSamplingPlanner
    * @brief Generates a local plan using the given generator and cost functions.
@@ -22,15 +22,15 @@ namespace NS_Planner
   class SimpleScoredSamplingPlanner: public TrajectorySearch
   {
   public:
-    
-    ~SimpleScoredSamplingPlanner ()
+
+    ~SimpleScoredSamplingPlanner()
     {
     }
-    
-    SimpleScoredSamplingPlanner ()
+
+    SimpleScoredSamplingPlanner()
     {
     }
-    
+
     /**
      * Takes a list of generators and critics. Critics return costs > 0, or negative costs for invalid trajectories.
      * Generators other than the first are fallback generators,  meaning they only get to generate if the previous
@@ -40,9 +40,9 @@ namespace NS_Planner
      * passing max_samples = -1 (default): Each Sampling planner will continue to call
      * generator until generator runs out of samples (or forever if that never happens)
      */
-    SimpleScoredSamplingPlanner (
-        std::vector<TrajectorySampleGenerator*> gen_list,
-        std::vector<TrajectoryCostFunction*>& critics, int max_samples = -1);
+    SimpleScoredSamplingPlanner(
+        std::vector< TrajectorySampleGenerator* > gen_list,
+        std::vector< TrajectoryCostFunction* >& critics, int max_samples = -1);
 
     /**
      * runs all scoring functions over the trajectory creating a weigthed sum
@@ -50,7 +50,7 @@ namespace NS_Planner
      * than positive best_traj_cost accumulated
      */
     double
-    scoreTrajectory (Trajectory& traj, double best_traj_cost);
+    scoreTrajectory(Trajectory& traj, double best_traj_cost);
 
     /**
      * Calls generator until generator has no more samples or max_samples is reached.
@@ -64,12 +64,12 @@ namespace NS_Planner
      * @param all_explored pass NULL or a container to collect all trajectories for debugging (has a penalty)
      */
     bool
-    findBestTrajectory (Trajectory& traj,
-                        std::vector<Trajectory>* all_explored = 0);
+    findBestTrajectory(Trajectory& traj,
+                       std::vector< Trajectory >* all_explored = 0);
 
   private:
-    std::vector<TrajectorySampleGenerator*> gen_list_;
-    std::vector<TrajectoryCostFunction*> critics_;
+    std::vector< TrajectorySampleGenerator* > gen_list_;
+    std::vector< TrajectoryCostFunction* > critics_;
 
     int max_samples_;
   };

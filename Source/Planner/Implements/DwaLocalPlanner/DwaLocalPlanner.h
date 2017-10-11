@@ -30,7 +30,7 @@ namespace NS_Planner
     /**
      * @brief  Constructor for DwaLocalPlanner wrapper
      */
-    DwaLocalPlanner ();
+    DwaLocalPlanner();
 
     /**
      * @brief  Constructs the ros wrapper
@@ -39,12 +39,12 @@ namespace NS_Planner
      * @param costmap The cost map to use for assigning costs to trajectories
      */
     virtual void
-    onInitialize ();
+    onInitialize();
 
     /**
      * @brief  Destructor for the wrapper
      */
-    ~DwaLocalPlanner ();
+    ~DwaLocalPlanner();
 
     /**
      * @brief  Given the current position, orientation, and velocity of the robot,
@@ -53,7 +53,7 @@ namespace NS_Planner
      * @return True if a valid trajectory was found, false otherwise
      */
     bool
-    computeVelocityCommands (NS_DataType::Twist& cmd_vel);
+    computeVelocityCommands(NS_DataType::Twist& cmd_vel);
 
     /**
      * @brief  Given the current position, orientation, and velocity of the robot,
@@ -62,8 +62,8 @@ namespace NS_Planner
      * @return True if a valid trajectory was found, false otherwise
      */
     bool
-    dwaComputeVelocityCommands (
-        NS_Transform::Stamped<NS_Transform::Pose>& global_pose,
+    dwaComputeVelocityCommands(
+        NS_Transform::Stamped< NS_Transform::Pose >& global_pose,
         NS_DataType::Twist& cmd_vel);
 
     /**
@@ -72,29 +72,28 @@ namespace NS_Planner
      * @return True if the plan was updated successfully, false otherwise
      */
     bool
-    setPlan (const std::vector<NS_DataType::PoseStamped>& orig_global_plan);
+    setPlan(const std::vector< NS_DataType::PoseStamped >& orig_global_plan);
 
     /**
      * @brief  Check if the goal pose has been achieved
      * @return True if achieved, false otherwise
      */
     bool
-    isGoalReached ();
+    isGoalReached();
 
-    bool
-    isInitialized ()
+    bool isInitialized()
     {
       return initialized_;
     }
-    
+
   private:
-    
+
     NS_Planner::LocalPlannerUtil planner_util_;
 
-    boost::shared_ptr<DWAPlanner> dp_; ///< @brief The trajectory controller
-    
+    boost::shared_ptr< DWAPlanner > dp_; ///< @brief The trajectory controller
+
     bool setup_;
-    NS_Transform::Stamped<NS_Transform::Pose> current_pose_;
+    NS_Transform::Stamped< NS_Transform::Pose > current_pose_;
 
     NS_Planner::LatchedStopRotateController* latchedStopRotateController_;
 

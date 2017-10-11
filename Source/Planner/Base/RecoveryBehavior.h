@@ -11,24 +11,23 @@
 class RecoveryBehavior
 {
 public:
-  RecoveryBehavior ()
+  RecoveryBehavior()
   {
   }
   ;
-  virtual
-  ~RecoveryBehavior ()
+  virtual ~RecoveryBehavior()
   {
   }
   ;
 public:
   void
-  initialize ();
+  initialize();
 
   virtual void
-  onInitialize () = 0;
+  onInitialize() = 0;
 
   virtual void
-  run () = 0;
+  run() = 0;
 };
 
 #endif /* NAVIGATION_PLANNER_BASE_RECOVERYBEHAVIOR_H_ */

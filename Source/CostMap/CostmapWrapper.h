@@ -23,9 +23,9 @@ namespace NS_CostMap
   class CostmapWrapper
   {
   public:
-    CostmapWrapper ();
+    CostmapWrapper();
     virtual
-    ~CostmapWrapper ();
+    ~CostmapWrapper();
   private:
     bool track_unknown_space_;
     std::string footprint_;
@@ -43,7 +43,7 @@ namespace NS_CostMap
     LayeredCostmap* layered_costmap;
 
     void
-    updateMapLoop (double frequency);
+    updateMapLoop(double frequency);
 
     boost::thread update_map_thread;
 
@@ -54,71 +54,70 @@ namespace NS_CostMap
     double saved_origin_x, saved_origin_y;
 
     char* cost_translation_table; ///< Translate from 0-255 values in costmap to -1 to 100 values in message.
-    
-    std::vector<NS_DataType::Point> padded_footprint;
+
+    std::vector< NS_DataType::Point > padded_footprint;
 
     bool got_map;
 
     bool running;
 
-    NS_Service::Client<NS_ServiceType::ServiceTransform>* odom_tf_cli;
+    NS_Service::Client< NS_ServiceType::ServiceTransform >* odom_tf_cli;
 
-    NS_Service::Client<NS_ServiceType::ServiceTransform>* map_tf_cli;
+    NS_Service::Client< NS_ServiceType::ServiceTransform >* map_tf_cli;
 
   private:
     void
-    loadParameters ();
+    loadParameters();
 
-    void
-    updateBounds (unsigned int x0_, unsigned int xn_, unsigned int y0_,
-                  unsigned int yn_)
+    void updateBounds(unsigned int x0_, unsigned int xn_, unsigned int y0_,
+                      unsigned int yn_)
     {
-      x0 = std::min (x0, x0_);
-      xn = std::max (xn, xn_);
-      y0 = std::min (y0, y0_);
-      yn = std::max (yn, yn_);
+      x0 = std::min(x0, x0_);
+      xn = std::max(xn, xn_);
+      y0 = std::min(y0, y0_);
+      yn = std::max(yn, yn_);
     }
-    
-    void
-    prepareMap ();
 
     void
-    setPaddedRobotFootprint (const std::vector<NS_DataType::Point>& points);
+    prepareMap();
 
     void
-    updateMap ();
+    setPaddedRobotFootprint(const std::vector< NS_DataType::Point >& points);
+
     void
-    updateCostmap ();
+    updateMap();
+    void
+    updateCostmap();
   public:
     LayeredCostmap*
-    getLayeredCostmap ()
+    getLayeredCostmap()
     {
       return layered_costmap;
     }
     ;
 
     bool
-    getRobotPose (NS_Transform::Stamped<NS_Transform::Pose>& global_pose) const;
+    getRobotPose(
+        NS_Transform::Stamped< NS_Transform::Pose >& global_pose) const;
 
     Costmap2D*
-    getCostmap ()
+    getCostmap()
     {
-      return layered_costmap->getCostmap ();
+      return layered_costmap->getCostmap();
     }
     ;
 
-    std::vector<NS_DataType::Point>
-    getRobotFootprint ()
+    std::vector< NS_DataType::Point > getRobotFootprint()
     {
       return padded_footprint;
     }
   public:
     void
-    initialize ();
+    initialize();
     void
-    start ();
+    start();
     void
-    stop ();
+    stop();
   };
 
 } /* namespace NS_CostMap */

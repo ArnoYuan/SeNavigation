@@ -6,24 +6,23 @@
 
 namespace NS_CostMap
 {
-  
+
   class CostmapLayer: public Layer, public Costmap2D
   {
   public:
-    CostmapLayer ()
-        : has_extra_bounds_ (false), extra_min_x_ (1e6), extra_max_x_ (-1e6),
-            extra_min_y_ (1e6), extra_max_y_ (-1e6)
+    CostmapLayer()
+        : has_extra_bounds_(false), extra_min_x_(1e6), extra_max_x_(-1e6),
+          extra_min_y_(1e6), extra_max_y_(-1e6)
     {
     }
-    
-    bool
-    isDiscretized ()
+
+    bool isDiscretized()
     {
       return true;
     }
-    
+
     virtual void
-    matchSize ();
+    matchSize();
 
     /**
      * If an external source changes values in the costmap,
@@ -35,7 +34,7 @@ namespace NS_CostMap
      * @param my1 Maximum y value of the bounding box
      */
     void
-    addExtraBounds (double mx0, double my0, double mx1, double my1);
+    addExtraBounds(double mx0, double my0, double mx1, double my1);
 
   protected:
     /*
@@ -46,8 +45,8 @@ namespace NS_CostMap
      * is written into the master grid.
      */
     void
-    updateWithTrueOverwrite (Costmap2D& master_grid, int min_i, int min_j,
-                             int max_i, int max_j);
+    updateWithTrueOverwrite(Costmap2D& master_grid, int min_i, int min_j,
+                            int max_i, int max_j);
 
     /*
      * Updates the master_grid within the specified
@@ -57,8 +56,8 @@ namespace NS_CostMap
      * is written into the master grid (does not copy NO_INFORMATION)
      */
     void
-    updateWithOverwrite (Costmap2D& master_grid, int min_i, int min_j,
-                         int max_i, int max_j);
+    updateWithOverwrite(Costmap2D& master_grid, int min_i, int min_j, int max_i,
+                        int max_j);
 
     /*
      * Updates the master_grid within the specified
@@ -70,8 +69,8 @@ namespace NS_CostMap
      * the master value does not change.
      */
     void
-    updateWithMax (Costmap2D& master_grid, int min_i, int min_j, int max_i,
-                   int max_j);
+    updateWithMax(Costmap2D& master_grid, int min_i, int min_j, int max_i,
+                  int max_j);
 
     /*
      * Updates the master_grid within the specified
@@ -86,8 +85,8 @@ namespace NS_CostMap
      * the master value is set to (INSCRIBED_INFLATED_OBSTACLE - 1).
      */
     void
-    updateWithAddition (Costmap2D& master_grid, int min_i, int min_j, int max_i,
-                        int max_j);
+    updateWithAddition(Costmap2D& master_grid, int min_i, int min_j, int max_i,
+                       int max_j);
 
     /**
      * Updates the bounding box specified in the parameters to include
@@ -101,8 +100,8 @@ namespace NS_CostMap
      * @param max_y bounding box
      */
     void
-    touch (double x, double y, double* min_x, double* min_y, double* max_x,
-           double* max_y);
+    touch(double x, double y, double* min_x, double* min_y, double* max_x,
+          double* max_y);
 
     /*
      * Updates the bounding box specified in the parameters
@@ -117,7 +116,7 @@ namespace NS_CostMap
      * @param max_y bounding box (input and output)
      */
     void
-    useExtraBounds (double* min_x, double* min_y, double* max_x, double* max_y);
+    useExtraBounds(double* min_x, double* min_y, double* max_x, double* max_y);
     bool has_extra_bounds_;
 
   private:

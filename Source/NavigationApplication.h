@@ -23,57 +23,59 @@
 
 namespace NS_Navigation
 {
-  
+
   enum NaviState
   {
-    PLANNING, CONTROLLING, CLEARING,
+    PLANNING,
+    CONTROLLING,
+    CLEARING,
   };
-  
+
 #define PLANNER_LOOP_TIMEOUT 100
-  
+
   class NavigationApplication: public Application
   {
   public:
-    NavigationApplication ();
+    NavigationApplication();
     virtual
-    ~NavigationApplication ();
+    ~NavigationApplication();
   private:
     void
-    loadParameters ();
+    loadParameters();
 
     void
-    planLoop ();
+    planLoop();
 
     void
-    controlLoop ();
+    controlLoop();
 
     bool
-    makePlan (const NS_DataType::PoseStamped& goal,
-              std::vector<NS_DataType::PoseStamped>& plan);
+    makePlan(const NS_DataType::PoseStamped& goal,
+             std::vector< NS_DataType::PoseStamped >& plan);
 
     void
-    goalCallback (NS_DataType::PoseStamped& target_goal);
+    goalCallback(NS_DataType::PoseStamped& target_goal);
 
     NS_DataType::PoseStamped
-    goalToGlobalFrame (NS_DataType::PoseStamped& goal);
+    goalToGlobalFrame(NS_DataType::PoseStamped& goal);
 
     bool
-    isQuaternionValid (const NS_DataType::Quaternion& q);
+    isQuaternionValid(const NS_DataType::Quaternion& q);
 
     double
-    distance (const NS_DataType::PoseStamped& p1,
-              const NS_DataType::PoseStamped& p2);
+    distance(const NS_DataType::PoseStamped& p1,
+             const NS_DataType::PoseStamped& p2);
     void
-    publishZeroVelocity ();
+    publishZeroVelocity();
 
     void
-    publishVelocity (double linear_x, double linear_y, double angular_z);
+    publishVelocity(double linear_x, double linear_y, double angular_z);
 
     void
-    runRecovery ();
+    runRecovery();
 
     void
-    resetState ();
+    resetState();
   private:
     std::string global_planner_type_;
     std::string local_planner_type_;
@@ -88,8 +90,8 @@ namespace NS_Navigation
 
   private:
     //set up plan triple buffer
-    std::vector<NS_DataType::PoseStamped>* global_planner_plan;
-    std::vector<NS_DataType::PoseStamped>* latest_plan;
+    std::vector< NS_DataType::PoseStamped >* global_planner_plan;
+    std::vector< NS_DataType::PoseStamped >* latest_plan;
 
     NS_DataType::PoseStamped oscillation_pose_;
 
@@ -115,14 +117,14 @@ namespace NS_Navigation
 
     NaviState state;
 
-    NS_DataSet::Publisher<NS_DataType::Twist>* twist_pub;
-    NS_DataSet::Subscriber<NS_DataType::PoseStamped>* goal_sub;
+    NS_DataSet::Publisher< NS_DataType::Twist >* twist_pub;
+    NS_DataSet::Subscriber< NS_DataType::PoseStamped >* goal_sub;
 
   public:
     virtual void
-    run ();
+    run();
     virtual void
-    quit ();
+    quit();
   };
 
 } /* namespace NS_Navigation */

@@ -6,19 +6,18 @@
 
 namespace NS_Planner
 {
-  
+
   class OscillationCostFunction: public TrajectoryCostFunction
   {
   public:
-    OscillationCostFunction ();
+    OscillationCostFunction();
     virtual
-    ~OscillationCostFunction ();
+    ~OscillationCostFunction();
 
     double
-    scoreTrajectory (Trajectory &traj);
+    scoreTrajectory(Trajectory &traj);
 
-    bool
-    prepare ()
+    bool prepare()
     {
       return true;
     }
@@ -28,20 +27,20 @@ namespace NS_Planner
      * @brief  Reset the oscillation flags for the local planner
      */
     void
-    resetOscillationFlags ();
+    resetOscillationFlags();
 
     void
-    updateOscillationFlags (Eigen::Vector3f pos, NS_Planner::Trajectory* traj,
-                            double min_vel_trans);
+    updateOscillationFlags(Eigen::Vector3f pos, NS_Planner::Trajectory* traj,
+                           double min_vel_trans);
 
     void
-    setOscillationResetDist (double dist, double angle);
+    setOscillationResetDist(double dist, double angle);
 
   private:
-    
+
     void
-    resetOscillationFlagsIfPossible (const Eigen::Vector3f& pos,
-                                     const Eigen::Vector3f& prev);
+    resetOscillationFlagsIfPossible(const Eigen::Vector3f& pos,
+                                    const Eigen::Vector3f& prev);
 
     /**
      * @brief  Given a trajectory that's selected, set flags if needed to
@@ -50,7 +49,7 @@ namespace NS_Planner
      * @return True if a flag was set, false otherwise
      */
     bool
-    setOscillationFlags (NS_Planner::Trajectory* t, double min_vel_trans);
+    setOscillationFlags(NS_Planner::Trajectory* t, double min_vel_trans);
 
     // flags
     bool strafe_pos_only_, strafe_neg_only_, strafing_pos_, strafing_neg_;

@@ -14,47 +14,44 @@ using namespace NS_Navigation;
 
 NavigationApplication* app;
 
-static void
-signalAction (int signal)
+static void signalAction(int signal)
 {
-  printf ("received term signal, quitting!\n");
-  app->quit ();
-  app->terminate ();
+  printf("received term signal, quitting!\n");
+  app->quit();
+  app->terminate();
 }
 
-void
-registerSignal ()
+void registerSignal()
 {
-  signal (SIGINT, signalAction);
+  //signal(SIGINT, signalAction);
   //signal (SIGKILL, signalAction);
   //signal (SIGQUIT, signalAction);
-  signal (SIGTERM, signalAction);
-  signal (SIGUSR1, signalAction);
+  //signal(SIGTERM, signalAction);
+  signal(SIGUSR1, signalAction);
 }
 
-int
-main (int argc, char* argv[])
+int main(int argc, char* argv[])
 {
   app = new NavigationApplication;
-  
-  registerSignal ();
-  
-  if (!app->initialize (argc, argv))
+
+  registerSignal();
+
+  if(!app->initialize(argc, argv))
   {
-    exit (EXIT_FAILURE);
+    exit(EXIT_FAILURE);
     return 0;
   }
-  
-  app->run ();
-  
-  if (!app->isRunning ())
+
+  app->run();
+
+  if(!app->isRunning())
   {
-    exit (EXIT_FAILURE);
+    exit(EXIT_FAILURE);
     return 0;
   }
-  
-  app->pending ();
-  
-  exit (EXIT_SUCCESS);
+
+  app->pending();
+
+  exit(EXIT_SUCCESS);
   return 0;
 }

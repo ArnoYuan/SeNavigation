@@ -7,7 +7,7 @@
 
 namespace NS_Planner
 {
-  
+
   /**
    * generates trajectories based on equi-distant discretisation of the degrees of freedom.
    * This is supposed to be a simple and robust implementation of the TrajectorySampleGenerator
@@ -25,16 +25,16 @@ namespace NS_Planner
   class SimpleTrajectoryGenerator: public NS_Planner::TrajectorySampleGenerator
   {
   public:
-    
-    SimpleTrajectoryGenerator ()
+
+    SimpleTrajectoryGenerator()
     {
       limits_ = NULL;
     }
-    
-    ~SimpleTrajectoryGenerator ()
+
+    ~SimpleTrajectoryGenerator()
     {
     }
-    
+
     /**
      * @param pos current robot position
      * @param vel current robot velocity
@@ -45,12 +45,12 @@ namespace NS_Planner
      * @param discretize_by_time if true, the trajectory is split according in chunks of the same duration, else of same length
      */
     void
-    initialise (const Eigen::Vector3f& pos, const Eigen::Vector3f& vel,
-                const Eigen::Vector3f& goal,
-                NS_Planner::LocalPlannerLimits* limits,
-                const Eigen::Vector3f& vsamples,
-                std::vector<Eigen::Vector3f> additional_samples,
-                bool discretize_by_time = false);
+    initialise(const Eigen::Vector3f& pos, const Eigen::Vector3f& vel,
+               const Eigen::Vector3f& goal,
+               NS_Planner::LocalPlannerLimits* limits,
+               const Eigen::Vector3f& vsamples,
+               std::vector< Eigen::Vector3f > additional_samples,
+               bool discretize_by_time = false);
 
     /**
      * @param pos current robot position
@@ -61,11 +61,11 @@ namespace NS_Planner
      * @param discretize_by_time if true, the trajectory is split according in chunks of the same duration, else of same length
      */
     void
-    initialise (const Eigen::Vector3f& pos, const Eigen::Vector3f& vel,
-                const Eigen::Vector3f& goal,
-                NS_Planner::LocalPlannerLimits* limits,
-                const Eigen::Vector3f& vsamples,
-                bool discretize_by_time = false);
+    initialise(const Eigen::Vector3f& pos, const Eigen::Vector3f& vel,
+               const Eigen::Vector3f& goal,
+               NS_Planner::LocalPlannerLimits* limits,
+               const Eigen::Vector3f& vsamples,
+               bool discretize_by_time = false);
 
     /**
      * This function is to be called only when parameters change
@@ -76,41 +76,41 @@ namespace NS_Planner
      * @param sim_period distance between points in one trajectory
      */
     void
-    setParameters (double sim_time, double sim_granularity,
-                   double angular_sim_granularity, bool use_dwa = false,
-                   double sim_period = 0.0);
+    setParameters(double sim_time, double sim_granularity,
+                  double angular_sim_granularity, bool use_dwa = false,
+                  double sim_period = 0.0);
 
     /**
      * Whether this generator can create more trajectories
      */
     bool
-    hasMoreTrajectories ();
+    hasMoreTrajectories();
 
     /**
      * Whether this generator can create more trajectories
      */
     bool
-    nextTrajectory (Trajectory &traj);
+    nextTrajectory(Trajectory &traj);
 
     static Eigen::Vector3f
-    computeNewPositions (const Eigen::Vector3f& pos, const Eigen::Vector3f& vel,
+    computeNewPositions(const Eigen::Vector3f& pos, const Eigen::Vector3f& vel,
+                        double dt);
+
+    static Eigen::Vector3f
+    computeNewVelocities(const Eigen::Vector3f& sample_target_vel,
+                         const Eigen::Vector3f& vel, Eigen::Vector3f acclimits,
                          double dt);
 
-    static Eigen::Vector3f
-    computeNewVelocities (const Eigen::Vector3f& sample_target_vel,
-                          const Eigen::Vector3f& vel, Eigen::Vector3f acclimits,
-                          double dt);
-
     bool
-    generateTrajectory (Eigen::Vector3f pos, Eigen::Vector3f vel,
-                        Eigen::Vector3f sample_target_vel,
-                        NS_Planner::Trajectory& traj);
+    generateTrajectory(Eigen::Vector3f pos, Eigen::Vector3f vel,
+                       Eigen::Vector3f sample_target_vel,
+                       NS_Planner::Trajectory& traj);
 
   protected:
-    
+
     unsigned int next_sample_index_;
     // to store sample params of each sample between init and generation
-    std::vector<Eigen::Vector3f> sample_params_;
+    std::vector< Eigen::Vector3f > sample_params_;
     NS_Planner::LocalPlannerLimits* limits_;
     Eigen::Vector3f pos_;
     Eigen::Vector3f vel_;

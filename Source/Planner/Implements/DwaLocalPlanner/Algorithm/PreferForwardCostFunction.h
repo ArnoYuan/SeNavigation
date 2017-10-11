@@ -5,35 +5,33 @@
 
 namespace NS_Planner
 {
-  
+
   class PreferForwardCostFunction: public TrajectoryCostFunction
   {
   public:
-    
-    PreferForwardCostFunction (double penalty)
-        : penalty_ (penalty)
-    {
-    }
-    ~PreferForwardCostFunction ()
-    {
-    }
-    
-    double
-    scoreTrajectory (Trajectory &traj);
 
-    bool
-    prepare ()
+    PreferForwardCostFunction(double penalty)
+        : penalty_(penalty)
+    {
+    }
+    ~PreferForwardCostFunction()
+    {
+    }
+
+    double
+    scoreTrajectory(Trajectory &traj);
+
+    bool prepare()
     {
       return true;
     }
     ;
 
-    void
-    setPenalty (double penalty)
+    void setPenalty(double penalty)
     {
       penalty_ = penalty;
     }
-    
+
   private:
     double penalty_;
   };

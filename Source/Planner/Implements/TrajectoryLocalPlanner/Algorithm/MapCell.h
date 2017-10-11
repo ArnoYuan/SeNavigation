@@ -15,20 +15,20 @@ namespace NS_Planner
     /**
      * @brief  Default constructor
      */
-    MapCell ();
+    MapCell();
 
     /**
      * @brief  Copy constructor
      * @param mc The MapCell to be copied
      */
-    MapCell (const MapCell& mc);
+    MapCell(const MapCell& mc);
 
     unsigned int cx, cy; ///< @brief Cell index in the grid map
-        
+
     double target_dist; ///< @brief Distance to planner's path
-    
+
     bool target_mark; ///< @brief Marks for computing path/goal distances
-    
+
     bool within_robot; ///< @brief Mark for cells within the robot footprint
   };
 }

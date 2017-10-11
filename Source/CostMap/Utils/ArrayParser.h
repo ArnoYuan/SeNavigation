@@ -6,7 +6,7 @@
 
 namespace NS_CostMap
 {
-  
+
   /** @brief Parse a vector of vectors of floats from a string.
    * @param error_return If no error, error_return is set to "".  If
    *        error, error_return will describe the error.
@@ -14,8 +14,8 @@ namespace NS_CostMap
    *
    * On error, error_return is set and the return value could be
    * anything, like part of a successful parse. */
-  std::vector<std::vector<float> >
-  parseVVF (const std::string& input, std::string& error_return);
+  std::vector< std::vector< float > >
+  parseVVF(const std::string& input, std::string& error_return);
 
 }  // end namespace costmap_2d
 

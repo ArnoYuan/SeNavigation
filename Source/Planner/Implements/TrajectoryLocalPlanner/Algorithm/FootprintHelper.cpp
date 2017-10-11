@@ -2,31 +2,31 @@
 
 namespace NS_Planner
 {
-  
-  FootprintHelper::FootprintHelper ()
+
+  FootprintHelper::FootprintHelper()
   {
   }
-  
-  FootprintHelper::~FootprintHelper ()
+
+  FootprintHelper::~FootprintHelper()
   {
   }
-  
-  void
-  FootprintHelper::getLineCells (int x0, int x1, int y0, int y1,
-                                 std::vector<NS_DataType::Position2DInt>& pts)
+
+  void FootprintHelper::getLineCells(
+      int x0, int x1, int y0, int y1,
+      std::vector< NS_DataType::Position2DInt >& pts)
   {
     //Bresenham Ray-Tracing
-    int deltax = abs (x1 - x0);        // The difference between the x's
-    int deltay = abs (y1 - y0);        // The difference between the y's
+    int deltax = abs(x1 - x0);        // The difference between the x's
+    int deltay = abs(y1 - y0);        // The difference between the y's
     int x = x0;                       // Start x off at the first pixel
     int y = y0;                       // Start y off at the first pixel
-    
+
     int xinc1, xinc2, yinc1, yinc2;
     int den, num, numadd, numpixels;
-    
+
     NS_DataType::Position2DInt pt;
-    
-    if (x1 >= x0)                 // The x-values are increasing
+
+    if(x1 >= x0)                 // The x-values are increasing
     {
       xinc1 = 1;
       xinc2 = 1;
@@ -36,8 +36,8 @@ namespace NS_Planner
       xinc1 = -1;
       xinc2 = -1;
     }
-    
-    if (y1 >= y0)                 // The y-values are increasing
+
+    if(y1 >= y0)                 // The y-values are increasing
     {
       yinc1 = 1;
       yinc2 = 1;
@@ -47,8 +47,8 @@ namespace NS_Planner
       yinc1 = -1;
       yinc2 = -1;
     }
-    
-    if (deltax >= deltay)     // There is at least one x-value for every y-value
+
+    if(deltax >= deltay)     // There is at least one x-value for every y-value
     {
       xinc1 = 0;             // Don't change the x when numerator >= denominator
       yinc2 = 0;                  // Don't change the y for every iteration
@@ -66,15 +66,15 @@ namespace NS_Planner
       numadd = deltax;
       numpixels = deltay;         // There are more y-values than x-values
     }
-    
-    for (int curpixel = 0; curpixel <= numpixels; curpixel++)
+
+    for(int curpixel = 0; curpixel <= numpixels; curpixel++)
     {
       pt.x = x;      //Draw the current pixel
       pt.y = y;
-      pts.push_back (pt);
-      
+      pts.push_back(pt);
+
       num += numadd;        // Increase the numerator by the top of the fraction
-      if (num >= den)             // Check if numerator >= denominator
+      if(num >= den)             // Check if numerator >= denominator
       {
         num -= den;               // Calculate the new numerator value
         x += xinc1;               // Change the x as appropriate
@@ -84,22 +84,21 @@ namespace NS_Planner
       y += yinc2;                 // Change the y as appropriate
     }
   }
-  
-  void
-  FootprintHelper::getFillCells (
-      std::vector<NS_DataType::Position2DInt>& footprint)
+
+  void FootprintHelper::getFillCells(
+      std::vector< NS_DataType::Position2DInt >& footprint)
   {
     //quick bubble sort to sort pts by x
     NS_DataType::Position2DInt swap, pt;
     unsigned int i = 0;
-    while (i < footprint.size () - 1)
+    while(i < footprint.size() - 1)
     {
-      if (footprint[i].x > footprint[i + 1].x)
+      if(footprint[i].x > footprint[i + 1].x)
       {
         swap = footprint[i];
         footprint[i] = footprint[i + 1];
         footprint[i + 1] = swap;
-        if (i > 0)
+        if(i > 0)
         {
           --i;
         }
@@ -109,20 +108,20 @@ namespace NS_Planner
         ++i;
       }
     }
-    
+
     i = 0;
     NS_DataType::Position2DInt min_pt;
     NS_DataType::Position2DInt max_pt;
     unsigned int min_x = footprint[0].x;
-    unsigned int max_x = footprint[footprint.size () - 1].x;
+    unsigned int max_x = footprint[footprint.size() - 1].x;
     //walk through each column and mark cells inside the footprint
-    for (unsigned int x = min_x; x <= max_x; ++x)
+    for(unsigned int x = min_x; x <= max_x; ++x)
     {
-      if (i >= footprint.size () - 1)
+      if(i >= footprint.size() - 1)
       {
         break;
       }
-      if (footprint[i].y < footprint[i + 1].y)
+      if(footprint[i].y < footprint[i + 1].y)
       {
         min_pt = footprint[i];
         max_pt = footprint[i + 1];
@@ -132,119 +131,106 @@ namespace NS_Planner
         min_pt = footprint[i + 1];
         max_pt = footprint[i];
       }
-      
+
       i += 2;
-      while (i < footprint.size () && footprint[i].x == x)
+      while(i < footprint.size() && footprint[i].x == x)
       {
-        if (footprint[i].y < min_pt.y)
+        if(footprint[i].y < min_pt.y)
         {
           min_pt = footprint[i];
         }
-        else if (footprint[i].y > max_pt.y)
+        else if(footprint[i].y > max_pt.y)
         {
           max_pt = footprint[i];
         }
         ++i;
       }
-      
+
       //loop though cells in the column
-      for (unsigned int y = min_pt.y; y < max_pt.y; ++y)
+      for(unsigned int y = min_pt.y; y < max_pt.y; ++y)
       {
         pt.x = x;
         pt.y = y;
-        footprint.push_back (pt);
+        footprint.push_back(pt);
       }
     }
   }
-  
+
   /**
    * get the cellsof a footprint at a given position
    */
-  std::vector<NS_DataType::Position2DInt>
-  FootprintHelper::getFootprintCells (
-      Eigen::Vector3f pos, std::vector<NS_DataType::Point> footprint_spec,
+  std::vector< NS_DataType::Position2DInt > FootprintHelper::getFootprintCells(
+      Eigen::Vector3f pos, std::vector< NS_DataType::Point > footprint_spec,
       const NS_CostMap::Costmap2D& costmap, bool fill)
   {
     double x_i = pos[0];
     double y_i = pos[1];
     double theta_i = pos[2];
-    std::vector<NS_DataType::Position2DInt> footprint_cells;
-    
+    std::vector< NS_DataType::Position2DInt > footprint_cells;
+
     //if we have no footprint... do nothing
-    if (footprint_spec.size () <= 1)
+    if(footprint_spec.size() <= 1)
     {
       unsigned int mx, my;
-      if (costmap.worldToMap (x_i, y_i, mx, my))
+      if(costmap.worldToMap(x_i, y_i, mx, my))
       {
         NS_DataType::Position2DInt center;
         center.x = mx;
         center.y = my;
-        footprint_cells.push_back (center);
+        footprint_cells.push_back(center);
       }
       return footprint_cells;
     }
-    
+
     //pre-compute cos and sin values
-    double cos_th = cos (theta_i);
-    double sin_th = sin (theta_i);
+    double cos_th = cos(theta_i);
+    double sin_th = sin(theta_i);
     double new_x, new_y;
     unsigned int x0, y0, x1, y1;
-    unsigned int last_index = footprint_spec.size () - 1;
-    
-    for (unsigned int i = 0; i < last_index; ++i)
+    unsigned int last_index = footprint_spec.size() - 1;
+
+    for(unsigned int i = 0; i < last_index; ++i)
     {
       //find the cell coordinates of the first segment point
-      new_x = x_i
-          + (footprint_spec[i].x * cos_th - footprint_spec[i].y * sin_th);
-      new_y = y_i
-          + (footprint_spec[i].x * sin_th + footprint_spec[i].y * cos_th);
-      if (!costmap.worldToMap (new_x, new_y, x0, y0))
+      new_x = x_i + (footprint_spec[i].x * cos_th - footprint_spec[i].y * sin_th);
+      new_y = y_i + (footprint_spec[i].x * sin_th + footprint_spec[i].y * cos_th);
+      if(!costmap.worldToMap(new_x, new_y, x0, y0))
       {
         return footprint_cells;
       }
-      
+
       //find the cell coordinates of the second segment point
-      new_x =
-          x_i
-              + (footprint_spec[i + 1].x * cos_th
-                  - footprint_spec[i + 1].y * sin_th);
-      new_y =
-          y_i
-              + (footprint_spec[i + 1].x * sin_th
-                  + footprint_spec[i + 1].y * cos_th);
-      if (!costmap.worldToMap (new_x, new_y, x1, y1))
+      new_x = x_i + (footprint_spec[i + 1].x * cos_th - footprint_spec[i + 1].y * sin_th);
+      new_y = y_i + (footprint_spec[i + 1].x * sin_th + footprint_spec[i + 1].y * cos_th);
+      if(!costmap.worldToMap(new_x, new_y, x1, y1))
       {
         return footprint_cells;
       }
-      
-      getLineCells (x0, x1, y0, y1, footprint_cells);
+
+      getLineCells(x0, x1, y0, y1, footprint_cells);
     }
-    
+
     //we need to close the loop, so we also have to raytrace from the last pt to first pt
-    new_x = x_i
-        + (footprint_spec[last_index].x * cos_th
-            - footprint_spec[last_index].y * sin_th);
-    new_y = y_i
-        + (footprint_spec[last_index].x * sin_th
-            + footprint_spec[last_index].y * cos_th);
-    if (!costmap.worldToMap (new_x, new_y, x0, y0))
+    new_x = x_i + (footprint_spec[last_index].x * cos_th - footprint_spec[last_index].y * sin_th);
+    new_y = y_i + (footprint_spec[last_index].x * sin_th + footprint_spec[last_index].y * cos_th);
+    if(!costmap.worldToMap(new_x, new_y, x0, y0))
     {
       return footprint_cells;
     }
     new_x = x_i + (footprint_spec[0].x * cos_th - footprint_spec[0].y * sin_th);
     new_y = y_i + (footprint_spec[0].x * sin_th + footprint_spec[0].y * cos_th);
-    if (!costmap.worldToMap (new_x, new_y, x1, y1))
+    if(!costmap.worldToMap(new_x, new_y, x1, y1))
     {
       return footprint_cells;
     }
-    
-    getLineCells (x0, x1, y0, y1, footprint_cells);
-    
-    if (fill)
+
+    getLineCells(x0, x1, y0, y1, footprint_cells);
+
+    if(fill)
     {
-      getFillCells (footprint_cells);
+      getFillCells(footprint_cells);
     }
-    
+
     return footprint_cells;
   }
 

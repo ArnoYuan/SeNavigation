@@ -15,40 +15,38 @@
 
 namespace NS_Planner
 {
-  
+
   class LocalPlannerBase
   {
   public:
-    LocalPlannerBase ()
+    LocalPlannerBase()
     {
     }
     ;
-    virtual
-    ~LocalPlannerBase ()
+    virtual ~LocalPlannerBase()
     {
     }
     ;
 
   public:
-    void
-    initialize (NS_CostMap::CostmapWrapper* costmap_)
+    void initialize(NS_CostMap::CostmapWrapper* costmap_)
     {
       costmap = costmap_;
-      onInitialize ();
+      onInitialize();
     }
     ;
 
     virtual void
-    onInitialize () = 0;
+    onInitialize() = 0;
 
     virtual bool
-    computeVelocityCommands (NS_DataType::Twist& cmd_vel) = 0;
+    computeVelocityCommands(NS_DataType::Twist& cmd_vel) = 0;
 
     virtual bool
-    isGoalReached () = 0;
+    isGoalReached() = 0;
 
     virtual bool
-    setPlan (const std::vector<NS_DataType::PoseStamped>& plan) = 0;
+    setPlan(const std::vector< NS_DataType::PoseStamped >& plan) = 0;
 
   protected:
     NS_CostMap::CostmapWrapper* costmap;

@@ -19,13 +19,12 @@ namespace NS_Planner
      * @param costmap The costmap that should be used
      * @return 
      */
-    CostmapModel (const NS_CostMap::Costmap2D& costmap);
+    CostmapModel(const NS_CostMap::Costmap2D& costmap);
 
     /**
      * @brief  Destructor for the world model
      */
-    virtual
-    ~CostmapModel ()
+    virtual ~CostmapModel()
     {
     }
     using WorldModel::footprintCost;
@@ -39,9 +38,9 @@ namespace NS_Planner
      * @return Positive if all the points lie outside the footprint, negative otherwise
      */
     virtual double
-    footprintCost (const NS_DataType::Point& position,
-                   const std::vector<NS_DataType::Point>& footprint,
-                   double inscribed_radius, double circumscribed_radius);
+    footprintCost(const NS_DataType::Point& position,
+                  const std::vector< NS_DataType::Point >& footprint,
+                  double inscribed_radius, double circumscribed_radius);
 
   private:
     /**
@@ -53,7 +52,7 @@ namespace NS_Planner
      * @return A positive cost for a legal line... negative otherwise
      */
     double
-    lineCost (int x0, int x1, int y0, int y1);
+    lineCost(int x0, int x1, int y0, int y1);
 
     /**
      * @brief  Checks the cost of a point in the costmap
@@ -62,10 +61,10 @@ namespace NS_Planner
      * @return A positive cost for a legal point... negative otherwise
      */
     double
-    pointCost (int x, int y);
+    pointCost(int x, int y);
 
     const NS_CostMap::Costmap2D& costmap_; ///< @brief Allows access of costmap obstacle information
-    
+
   };
 }
 ;

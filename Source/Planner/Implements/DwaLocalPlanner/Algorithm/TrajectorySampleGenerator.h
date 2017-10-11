@@ -5,7 +5,7 @@
 
 namespace NS_Planner
 {
-  
+
   /**
    * @class TrajectorySampleGenerator
    * @brief Provides an interface for navigation trajectory generators
@@ -13,32 +13,31 @@ namespace NS_Planner
   class TrajectorySampleGenerator
   {
   public:
-    
-    /**
-     * Whether this generator can create more trajectories
-     */
-    virtual bool
-    hasMoreTrajectories () = 0;
 
     /**
      * Whether this generator can create more trajectories
      */
     virtual bool
-    nextTrajectory (Trajectory &traj) = 0;
+    hasMoreTrajectories() = 0;
+
+    /**
+     * Whether this generator can create more trajectories
+     */
+    virtual bool
+    nextTrajectory(Trajectory &traj) = 0;
 
     /**
      * @brief  Virtual destructor for the interface
      */
-    virtual
-    ~TrajectorySampleGenerator ()
+    virtual ~TrajectorySampleGenerator()
     {
     }
-    
+
   protected:
-    TrajectorySampleGenerator ()
+    TrajectorySampleGenerator()
     {
     }
-    
+
   };
 
 } // end namespace

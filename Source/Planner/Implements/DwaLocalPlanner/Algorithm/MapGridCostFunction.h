@@ -8,7 +8,7 @@
 
 namespace NS_Planner
 {
-  
+
   /**
    * when scoring a trajectory according to the values in mapgrid, we can take
    *return the value of the last point (if no of the earlier points were in
@@ -16,9 +16,11 @@ namespace NS_Planner
    */
   enum CostAggregationType
   {
-    Last, Sum, Product
+    Last,
+    Sum,
+    Product
   };
-  
+
   /**
    * This class provides cost based on a map_grid of a small area of the world.
    * The map_grid covers a the costmap, the costmap containing the information
@@ -40,75 +42,70 @@ namespace NS_Planner
   class MapGridCostFunction: public TrajectoryCostFunction
   {
   public:
-    MapGridCostFunction (NS_CostMap::Costmap2D* costmap, double xshift = 0.0,
-                         double yshift = 0.0, bool is_local_goal_function =
-                             false,
-                         CostAggregationType aggregationType = Last);
+    MapGridCostFunction(NS_CostMap::Costmap2D* costmap, double xshift = 0.0,
+                        double yshift = 0.0,
+                        bool is_local_goal_function = false,
+                        CostAggregationType aggregationType = Last);
 
-    ~MapGridCostFunction ()
+    ~MapGridCostFunction()
     {
     }
-    
+
     /**
      * set line segments on the grid with distance 0, resets the grid
      */
     void
-    setTargetPoses (std::vector<NS_DataType::PoseStamped> target_poses);
+    setTargetPoses(std::vector< NS_DataType::PoseStamped > target_poses);
 
-    void
-    setXShift (double xshift)
+    void setXShift(double xshift)
     {
       xshift_ = xshift;
     }
-    void
-    setYShift (double yshift)
+    void setYShift(double yshift)
     {
       yshift_ = yshift;
     }
-    
+
     /** @brief If true, failures along the path cause the entire path to be rejected.
      *
      * Default is true. */
-    void
-    setStopOnFailure (bool stop_on_failure)
+    void setStopOnFailure(bool stop_on_failure)
     {
       stop_on_failure_ = stop_on_failure;
     }
-    
+
     /**
      * propagate distances
      */
     bool
-    prepare ();
+    prepare();
 
     double
-    scoreTrajectory (Trajectory &traj);
+    scoreTrajectory(Trajectory &traj);
 
     /**
      * return a value that indicates cell is in obstacle
      */
-    double
-    obstacleCosts ()
+    double obstacleCosts()
     {
-      return map_.obstacleCosts ();
+      return map_.obstacleCosts();
     }
-    
+
     /**
      * returns a value indicating cell was not reached by wavefront
      * propagation of set cells. (is behind walls, regarding the region covered by grid)
      */
-    double
-    unreachableCellCosts ()
+    double unreachableCellCosts()
     {
-      return map_.unreachableCellCosts ();
+      return map_.unreachableCellCosts();
     }
-    
+
     // used for easier debugging
     double
-    getCellCosts (unsigned int cx, unsigned int cy);
+    getCellCosts(unsigned int cx, unsigned int cy);
 
   private:
-    std::vector<NS_DataType::PoseStamped> target_poses_;
+    std::vector< NS_DataType::PoseStamped > target_poses_;
     NS_CostMap::Costmap2D* costmap_;
 
     NS_Planner::MapGrid map_;

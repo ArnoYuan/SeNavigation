@@ -35,7 +35,7 @@ namespace NS_Planner
     /**
      * @brief  Default constructor for the ros wrapper
      */
-    TrajectoryLocalPlanner ();
+    TrajectoryLocalPlanner();
 
     /**
      * @brief  Constructs the ros wrapper
@@ -44,12 +44,12 @@ namespace NS_Planner
      * @param costmap The cost map to use for assigning costs to trajectories
      */
     virtual void
-    onInitialize ();
+    onInitialize();
 
     /**
      * @brief  Destructor for the wrapper
      */
-    ~TrajectoryLocalPlanner ();
+    ~TrajectoryLocalPlanner();
 
     /**
      * @brief  Given the current position, orientation, and velocity of the robot,
@@ -58,7 +58,7 @@ namespace NS_Planner
      * @return True if a valid trajectory was found, false otherwise
      */
     virtual bool
-    computeVelocityCommands (NS_DataType::Twist& cmd_vel);
+    computeVelocityCommands(NS_DataType::Twist& cmd_vel);
 
     /**
      * @brief  Set the plan that the controller is following
@@ -66,14 +66,14 @@ namespace NS_Planner
      * @return True if the plan was updated successfully, false otherwise
      */
     virtual bool
-    setPlan (const std::vector<NS_DataType::PoseStamped>& orig_global_plan);
+    setPlan(const std::vector< NS_DataType::PoseStamped >& orig_global_plan);
 
     /**
      * @brief  Check if the goal pose has been achieved
      * @return True if achieved, false otherwise
      */
     virtual bool
-    isGoalReached ();
+    isGoalReached();
 
     /**
      * @brief  Generate and score a single trajectory
@@ -87,8 +87,8 @@ namespace NS_Planner
      * @return True if the trajectory is legal, false otherwise
      */
     bool
-    checkTrajectory (double vx_samp, double vy_samp, double vtheta_samp,
-                     bool update_map = true);
+    checkTrajectory(double vx_samp, double vy_samp, double vtheta_samp,
+                    bool update_map = true);
 
     /**
      * @brief  Generate and score a single trajectory
@@ -102,24 +102,23 @@ namespace NS_Planner
      * @return score of trajectory (double)
      */
     double
-    scoreTrajectory (double vx_samp, double vy_samp, double vtheta_samp,
-                     bool update_map = true);
+    scoreTrajectory(double vx_samp, double vy_samp, double vtheta_samp,
+                    bool update_map = true);
 
-    bool
-    isInitialized ()
+    bool isInitialized()
     {
       return initialized_;
     }
-    
+
     /** @brief Return the inner TrajectoryPlanner object.  Only valid after initialize(). */
     TrajectoryPlanner*
-    getPlanner () const
+    getPlanner() const
     {
       return tc_;
     }
-    
+
   private:
-    
+
     /**
      * @brief Once a goal position is reached... rotate to the goal orientation
      * @param  global_pose The pose of the robot in the global frame
@@ -129,9 +128,9 @@ namespace NS_Planner
      * @return  True if a valid trajectory was found, false otherwise
      */
     bool
-    rotateToGoal (const NS_Transform::Stamped<NS_Transform::Pose>& global_pose,
-                  const NS_Transform::Stamped<NS_Transform::Pose>& robot_vel,
-                  double goal_th, NS_DataType::Twist& cmd_vel);
+    rotateToGoal(const NS_Transform::Stamped< NS_Transform::Pose >& global_pose,
+                 const NS_Transform::Stamped< NS_Transform::Pose >& robot_vel,
+                 double goal_th, NS_DataType::Twist& cmd_vel);
 
     /**
      * @brief Stop the robot taking into account acceleration limits
@@ -141,30 +140,29 @@ namespace NS_Planner
      * @return  True if a valid trajectory was found, false otherwise
      */
     bool
-    stopWithAccLimits (
-        const NS_Transform::Stamped<NS_Transform::Pose>& global_pose,
-        const NS_Transform::Stamped<NS_Transform::Pose>& robot_vel,
+    stopWithAccLimits(
+        const NS_Transform::Stamped< NS_Transform::Pose >& global_pose,
+        const NS_Transform::Stamped< NS_Transform::Pose >& robot_vel,
         NS_DataType::Twist& cmd_vel);
 
-    double
-    sign (double x)
+    double sign(double x)
     {
       return x < 0.0 ? -1.0 : 1.0;
     }
-    
+
     WorldModel* world_model_; ///< @brief The world model that the controller will use
     TrajectoryPlanner* tc_; ///< @brief The trajectory controller
-    
+
     OdometryHelper* odom_helper_;
 
     NS_CostMap::Costmap2D* costmap_; ///< @brief The costmap the controller will use
-    
+
     double max_sensor_range_; ///< @brief Keep track of the effective maximum range of our sensors
     NS_DataType::Odometry base_odom_; ///< @brief Used to get the velocity of the robot
-    
+
     double rot_stopped_velocity_, trans_stopped_velocity_;
     double xy_goal_tolerance_, yaw_goal_tolerance_, min_in_place_vel_th_;
-    std::vector<NS_DataType::PoseStamped> global_plan_;
+    std::vector< NS_DataType::PoseStamped > global_plan_;
     bool prune_plan_;
     boost::recursive_mutex odom_lock_;
 
@@ -179,8 +177,8 @@ namespace NS_Planner
 
     bool initialized_;
 
-    std::vector<NS_DataType::Point> footprint_spec_;
-    
+    std::vector< NS_DataType::Point > footprint_spec_;
+
   };
 }
 ;

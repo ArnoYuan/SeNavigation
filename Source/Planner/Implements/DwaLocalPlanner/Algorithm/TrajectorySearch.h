@@ -5,7 +5,7 @@
 
 namespace NS_Planner
 {
-  
+
   /**
    * @class TrajectorySearch
    * @brief Interface for modules finding a trajectory to use for navigation commands next
@@ -22,19 +22,18 @@ namespace NS_Planner
      * @param all_explored pass NULL or a container to collect all trajectories for debugging (has a penalty)
      */
     virtual bool
-    findBestTrajectory (Trajectory& traj,
-                        std::vector<Trajectory>* all_explored) = 0;
+    findBestTrajectory(Trajectory& traj,
+                       std::vector< Trajectory >* all_explored) = 0;
 
-    virtual
-    ~TrajectorySearch ()
+    virtual ~TrajectorySearch()
     {
     }
-    
+
   protected:
-    TrajectorySearch ()
+    TrajectorySearch()
     {
     }
-    
+
   };
 
 }

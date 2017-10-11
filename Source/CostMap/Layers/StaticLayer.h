@@ -11,36 +11,36 @@
 
 namespace NS_CostMap
 {
-  
+
   class StaticLayer: public CostmapLayer
   {
   public:
-    StaticLayer ();
+    StaticLayer();
     virtual
-    ~StaticLayer ();
+    ~StaticLayer();
     virtual void
-    onInitialize ();
+    onInitialize();
     virtual void
-    activate ();
+    activate();
     virtual void
-    deactivate ();
+    deactivate();
     virtual void
-    reset ();
+    reset();
 
     virtual void
-    updateBounds (double robot_x, double robot_y, double robot_yaw,
-                  double* min_x, double* min_y, double* max_x, double* max_y);
+    updateBounds(double robot_x, double robot_y, double robot_yaw,
+                 double* min_x, double* min_y, double* max_x, double* max_y);
     virtual void
-    updateCosts (Costmap2D& master_grid, int min_i, int min_j, int max_i,
-                 int max_j);
+    updateCosts(Costmap2D& master_grid, int min_i, int min_j, int max_i,
+                int max_j);
 
     virtual void
-    matchSize ();
+    matchSize();
 
   private:
-    
+
     unsigned char
-    interpretValue (unsigned char value);
+    interpretValue(unsigned char value);
 
   private:
     unsigned int x_, y_, width_, height_;
@@ -54,7 +54,7 @@ namespace NS_CostMap
     double map_update_frequency_;
 
   private:
-    
+
     bool active;
 
     boost::thread static_layer_loop;
@@ -63,14 +63,14 @@ namespace NS_CostMap
 
     bool has_updated_data;
 
-    NS_Service::Client<NS_ServiceType::ServiceMap>* map_cli;
+    NS_Service::Client< NS_ServiceType::ServiceMap >* map_cli;
 
     void
-    loopStaticMap ();
+    loopStaticMap();
 
     void
-    processMap (const NS_DataType::OccupancyGrid& new_map);
-    
+    processMap(const NS_DataType::OccupancyGrid& new_map);
+
   };
 
 }  // namespace costmap_2d

@@ -9,14 +9,14 @@
 
 namespace NS_Planner
 {
-  
+
   /**
    * @class LocalPlannerUtil
    * @brief Helper class implementing infrastructure code many local planner implementations may need.
    */
   class LocalPlannerUtil
   {
-    
+
   private:
     // things we get from move_base
     std::string name_;
@@ -24,7 +24,7 @@ namespace NS_Planner
 
     NS_CostMap::Costmap2D* costmap_;
 
-    std::vector<NS_DataType::PoseStamped> global_plan_;
+    std::vector< NS_DataType::PoseStamped > global_plan_;
 
     boost::mutex limits_configuration_mutex_;
     bool setup_;
@@ -33,44 +33,43 @@ namespace NS_Planner
     bool initialized_;
 
   public:
-    
+
     /**
      * @brief  Callback to update the local planner's parameters
      */
     //todo: need re-coding this part
     void
-    reconfigureCB (LocalPlannerLimits &config, bool restore_defaults);
+    reconfigureCB(LocalPlannerLimits &config, bool restore_defaults);
 
-    LocalPlannerUtil ()
-        : initialized_ (false)
+    LocalPlannerUtil()
+        : initialized_(false)
     {
     }
-    
-    ~LocalPlannerUtil ()
+
+    ~LocalPlannerUtil()
     {
     }
-    
+
     void
-    initialize (NS_CostMap::Costmap2D* costmap);
+    initialize(NS_CostMap::Costmap2D* costmap);
 
     bool
-    getGoal (NS_Transform::Stamped<NS_Transform::Pose>& goal_pose);
+    getGoal(NS_Transform::Stamped< NS_Transform::Pose >& goal_pose);
 
     bool
-    setPlan (const std::vector<NS_DataType::PoseStamped>& orig_global_plan);
+    setPlan(const std::vector< NS_DataType::PoseStamped >& orig_global_plan);
 
     bool
-    getLocalPlan (NS_Transform::Stamped<NS_Transform::Pose>& global_pose,
-                  std::vector<NS_DataType::PoseStamped>& transformed_plan);
+    getLocalPlan(NS_Transform::Stamped< NS_Transform::Pose >& global_pose,
+                 std::vector< NS_DataType::PoseStamped >& transformed_plan);
 
     NS_CostMap::Costmap2D*
-    getCostmap ();
+    getCostmap();
 
     LocalPlannerLimits
-    getCurrentLimits ();
+    getCurrentLimits();
 
-    std::string
-    getGlobalFrame ()
+    std::string getGlobalFrame()
     {
       return global_frame_;
     }

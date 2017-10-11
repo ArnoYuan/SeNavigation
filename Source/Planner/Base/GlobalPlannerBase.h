@@ -13,44 +13,42 @@
 
 namespace NS_Planner
 {
-  
+
   class GlobalPlannerBase
   {
   public:
-    GlobalPlannerBase ()
+    GlobalPlannerBase()
     {
     }
     ;
-    virtual
-    ~GlobalPlannerBase ()
+    virtual ~GlobalPlannerBase()
     {
     }
     ;
 
   public:
-    void
-    initialize (NS_CostMap::CostmapWrapper* costmap_)
+    void initialize(NS_CostMap::CostmapWrapper* costmap_)
     {
       costmap = costmap_;
-      onInitialize ();
+      onInitialize();
     }
     ;
 
     virtual void
-    onInitialize () = 0;
+    onInitialize() = 0;
 
     virtual bool
-    makePlan (const NS_DataType::PoseStamped& start,
-              const NS_DataType::PoseStamped& goal,
-              std::vector<NS_DataType::PoseStamped>& plan) = 0;
+    makePlan(const NS_DataType::PoseStamped& start,
+             const NS_DataType::PoseStamped& goal,
+             std::vector< NS_DataType::PoseStamped >& plan) = 0;
 
-    virtual bool
-    makePlan (const NS_DataType::PoseStamped& start,
-              const NS_DataType::PoseStamped& goal,
-              std::vector<NS_DataType::PoseStamped>& plan, double& cost)
+    virtual bool makePlan(const NS_DataType::PoseStamped& start,
+                          const NS_DataType::PoseStamped& goal,
+                          std::vector< NS_DataType::PoseStamped >& plan,
+                          double& cost)
     {
       cost = 0;
-      makePlan (start, goal, plan);
+      makePlan(start, goal, plan);
     }
     ;
   protected:

@@ -10,54 +10,54 @@
 
 namespace NS_Planner
 {
-  
+
   class Expander;
   class GridPath;
-  
+
   class GlobalPlanner: public GlobalPlannerBase
   {
   public:
-    GlobalPlanner ();
+    GlobalPlanner();
     virtual
-    ~GlobalPlanner ();
+    ~GlobalPlanner();
 
     void
-    onInitialize ();
+    onInitialize();
 
     bool
-    makePlan (const NS_DataType::PoseStamped& start,
-              const NS_DataType::PoseStamped& goal,
-              std::vector<NS_DataType::PoseStamped>& plan);
+    makePlan(const NS_DataType::PoseStamped& start,
+             const NS_DataType::PoseStamped& goal,
+             std::vector< NS_DataType::PoseStamped >& plan);
 
 //	bool makePlanService(NS_ServiceType::RequestBase*  req, NS_ServiceType::ResponseBase* resp);
-    
+
     bool
-    getPlanFromPotential (double start_x, double start_y, double end_x,
-                          double end_y, const NS_DataType::PoseStamped& goal,
-                          std::vector<NS_DataType::PoseStamped>& plan);
+    getPlanFromPotential(double start_x, double start_y, double end_x,
+                         double end_y, const NS_DataType::PoseStamped& goal,
+                         std::vector< NS_DataType::PoseStamped >& plan);
 
 //	void publishPlan(const std::vector<NS_DataType::PoseStamped>& path);
-    
+
   protected:
 //    costmap_2d::Costmap2D* costmap_;
 //    std::string frame_id_;
 //    ros::Publisher plan_pub_;
     bool initialized_, allow_unknown_; //, visualize_potential_;
-        
+
   private:
     void
-    mapToWorld (double mx, double my, double& wx, double& wy);
+    mapToWorld(double mx, double my, double& wx, double& wy);
     bool
-    worldToMap (double wx, double wy, double& mx, double& my);
+    worldToMap(double wx, double wy, double& mx, double& my);
     void
-    clearRobotCell (unsigned int mx, unsigned int my);
+    clearRobotCell(unsigned int mx, unsigned int my);
 //     void publishPotential(float* potential);
-    
+
     double planner_window_x_, planner_window_y_, default_tolerance_;
 //     std::string tf_prefix_;
     boost::mutex mutex_;
 //     ros::ServiceServer make_plan_srv_;
-    
+
     PotentialCalculator* p_calc_;
     Expander* planner_;
     Traceback* path_maker_;
@@ -68,7 +68,7 @@ namespace NS_Planner
     int publish_scale_;
 
     void
-    outlineMap (unsigned char* costarr, int nx, int ny, unsigned char value);
+    outlineMap(unsigned char* costarr, int nx, int ny, unsigned char value);
     unsigned char* cost_array_;
     float* potential_array_;
     unsigned int start_x_, start_y_, end_x_, end_y_;

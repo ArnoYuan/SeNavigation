@@ -33,27 +33,26 @@ namespace NS_Planner
      * @param costmap_ros A pointer to the costmap instance the planner should use
      * @param global_frame the frame id of the tf frame to use
      */
-    DWAPlanner (NS_Planner::LocalPlannerUtil *planner_util, bool sum_scores =
-                    false,
-                double cheat_factor = 1.0, double sim_time = 1.0,
-                double sim_granularity = 0.025, double angular_sim_granularity =
-                    0.025,
-                double pdist_scale = 32.0, double gdist_scale = 24.0,
-                double occdist_scale = 0.01, double stop_time_buffer = 0.2,
-                double oscillation_reset_dist = 0.05,
-                double oscillation_reset_angle = 0.2,
-                double forward_point_dist = 0.325, double max_trans_vel = 0.55,
-                double scaling_speed = 0.25, double max_scaling_factor = 0.2,
-                int vx_samples = 3, int vy_samples = 10, int vth_samples = 20,
-                bool dwa = true, double sim_period = 0.1);
+    DWAPlanner(NS_Planner::LocalPlannerUtil *planner_util,
+               bool sum_scores = false, double cheat_factor = 1.0,
+               double sim_time = 1.0, double sim_granularity = 0.025,
+               double angular_sim_granularity = 0.025,
+               double pdist_scale = 32.0, double gdist_scale = 24.0,
+               double occdist_scale = 0.01, double stop_time_buffer = 0.2,
+               double oscillation_reset_dist = 0.05,
+               double oscillation_reset_angle = 0.2,
+               double forward_point_dist = 0.325, double max_trans_vel = 0.55,
+               double scaling_speed = 0.25, double max_scaling_factor = 0.2,
+               int vx_samples = 3, int vy_samples = 10, int vth_samples = 20,
+               bool dwa = true, double sim_period = 0.1);
 
     /**
      * @brief  Destructor for the planner
      */
-    ~DWAPlanner ()
+    ~DWAPlanner()
     {
     }
-    
+
     /**
      * @brief  Check if a trajectory is legal for a position/velocity pair
      * @param pos The robot's position
@@ -62,8 +61,8 @@ namespace NS_Planner
      * @return True if the trajectory is valid, false otherwise
      */
     bool
-    checkTrajectory (const Eigen::Vector3f pos, const Eigen::Vector3f vel,
-                     const Eigen::Vector3f vel_samples);
+    checkTrajectory(const Eigen::Vector3f pos, const Eigen::Vector3f vel,
+                    const Eigen::Vector3f vel_samples);
 
     /**
      * @brief Given the current position and velocity of the robot, find the best trajectory to exectue
@@ -73,30 +72,29 @@ namespace NS_Planner
      * @return The highest scoring trajectory. A cost >= 0 means the trajectory is legal to execute.
      */
     NS_Planner::Trajectory
-    findBestPath (NS_Transform::Stamped<NS_Transform::Pose> global_pose,
-                  NS_Transform::Stamped<NS_Transform::Pose> global_vel,
-                  NS_Transform::Stamped<NS_Transform::Pose>& drive_velocities,
-                  std::vector<NS_DataType::Point> footprint_spec);
+    findBestPath(NS_Transform::Stamped< NS_Transform::Pose > global_pose,
+                 NS_Transform::Stamped< NS_Transform::Pose > global_vel,
+                 NS_Transform::Stamped< NS_Transform::Pose >& drive_velocities,
+                 std::vector< NS_DataType::Point > footprint_spec);
 
     /**
      * @brief  Take in a new global plan for the local planner to follow, and adjust local costmaps
      * @param  new_plan The new global plan
      */
     void
-    updatePlanAndLocalCosts (
-        NS_Transform::Stamped<NS_Transform::Pose> global_pose,
-        const std::vector<NS_DataType::PoseStamped>& new_plan);
+    updatePlanAndLocalCosts(
+        NS_Transform::Stamped< NS_Transform::Pose > global_pose,
+        const std::vector< NS_DataType::PoseStamped >& new_plan);
 
     /**
      * @brief Get the period at which the local planner is expected to run
      * @return The simulation period
      */
-    double
-    getSimPeriod ()
+    double getSimPeriod()
     {
       return sim_period_;
     }
-    
+
     /**
      * @brief Compute the components and total cost for a map grid cell
      * @param cx The x coordinate of the cell in the map grid
@@ -108,17 +106,17 @@ namespace NS_Planner
      * @return True if the cell is traversible and therefore a legal location for the robot to move to
      */
     bool
-    getCellCosts (int cx, int cy, float &path_cost, float &goal_cost,
-                  float &occ_cost, float &total_cost);
+    getCellCosts(int cx, int cy, float &path_cost, float &goal_cost,
+                 float &occ_cost, float &total_cost);
 
     /**
      * sets new plan and resets state
      */
     bool
-    setPlan (const std::vector<NS_DataType::PoseStamped>& orig_global_plan);
+    setPlan(const std::vector< NS_DataType::PoseStamped >& orig_global_plan);
 
   private:
-    
+
     NS_Planner::LocalPlannerUtil *planner_util_;
 
     double stop_time_buffer_; ///< @brief How long before hitting something we're going to enforce that the robot stop
@@ -130,7 +128,7 @@ namespace NS_Planner
 
     double forward_point_distance_;
 
-    std::vector<NS_DataType::PoseStamped> global_plan_;
+    std::vector< NS_DataType::PoseStamped > global_plan_;
 
     boost::mutex configuration_mutex_;
 

@@ -19,12 +19,12 @@ namespace NS_Planner
   class DijkstraExpansion: public Expander
   {
   public:
-    DijkstraExpansion (PotentialCalculator* p_calc, int nx, int ny);
-    ~DijkstraExpansion ();
+    DijkstraExpansion(PotentialCalculator* p_calc, int nx, int ny);
+    ~DijkstraExpansion();
     bool
-    calculatePotentials (unsigned char* costs, double start_x, double start_y,
-                         double end_x, double end_y, int cycles,
-                         float* potential);
+    calculatePotentials(unsigned char* costs, double start_x, double start_y,
+                        double end_x, double end_y, int cycles,
+                        float* potential);
 
     /**
      * @brief  Sets or resets the size of the map
@@ -32,22 +32,20 @@ namespace NS_Planner
      * @param ny The y size of the map
      */
     void
-    setSize (int nx, int ny); /**< sets or resets the size of the map */
-    
-    void
-    setNeutralCost (unsigned char neutral_cost)
+    setSize(int nx, int ny); /**< sets or resets the size of the map */
+
+    void setNeutralCost(unsigned char neutral_cost)
     {
       neutral_cost_ = neutral_cost;
       priorityIncrement_ = 2 * neutral_cost_;
     }
-    
-    void
-    setPreciseStart (bool precise)
+
+    void setPreciseStart(bool precise)
     {
       precise_ = precise;
     }
   private:
-    
+
     /**
      * @brief  Updates the cell at index n
      * @param costs The costmap
@@ -55,22 +53,21 @@ namespace NS_Planner
      * @param n The index to update
      */
     void
-    updateCell (unsigned char* costs, float* potential, int n); /** updates the cell at index n */
-    
-    float
-    getCost (unsigned char* costs, int n)
+    updateCell(unsigned char* costs, float* potential, int n); /** updates the cell at index n */
+
+    float getCost(unsigned char* costs, int n)
     {
       float c = costs[n];
-      if (c < lethal_cost_ - 1 || (unknown_ && c == 255))
+      if(c < lethal_cost_ - 1 || (unknown_ && c == 255))
       { // lethal_cost 253
         c = c * factor_ + neutral_cost_; // factor = 3.0  neutral_cost = 50
-        if (c >= lethal_cost_)
+        if(c >= lethal_cost_)
           c = lethal_cost_ - 1;
         return c;
       }
       return lethal_cost_;
     }
-    
+
     /** block priority buffers */
     int *buffer1_, *buffer2_, *buffer3_; /**< storage buffers for priority blocks */
     int *currentBuffer_, *nextBuffer_, *overBuffer_; /**< priority buffer block ptrs */
@@ -81,7 +78,7 @@ namespace NS_Planner
     /** block priority thresholds */
     float threshold_; /**< current threshold */
     float priorityIncrement_; /**< priority threshold increment */
-    
+
   };
 } //end namespace global_planner
 #endif
