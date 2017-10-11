@@ -454,6 +454,7 @@ namespace NS_Navigation
   void
   NavigationApplication::quit ()
   {
+    console.message("navigation is quitting!");
     global_costmap->stop ();
     local_costmap->stop ();
     
