@@ -108,16 +108,14 @@ namespace NS_CostMap
   {
     unsigned int size_x = new_map.info.width, size_y = new_map.info.height;
 
-    printf("Received a %d X %d map at %f m/pix\n", size_x, size_y,
-           new_map.info.resolution);
+    //printf("Received a %d X %d map at %f m/pix\n", size_x, size_y, new_map.info.resolution);
 
     // resize costmap if size, resolution or origin do not match
     Costmap2D* master = layered_costmap_->getCostmap();
     if(master->getSizeInCellsX() != size_x || master->getSizeInCellsY() != size_y || master->getResolution() != new_map.info.resolution || master->getOriginX() != new_map.info.origin.position.x || master->getOriginY() != new_map.info.origin.position.y || !layered_costmap_->isSizeLocked())
     {
       // Update the size of the layered costmap (and all layers, including this one)
-      printf("Resizing costmap to %d X %d at %f m/pix\n", size_x, size_y,
-             new_map.info.resolution);
+      //printf("Resizing costmap to %d X %d at %f m/pix\n", size_x, size_y, new_map.info.resolution);
       layered_costmap_->resizeMap(size_x, size_y, new_map.info.resolution,
                                   new_map.info.origin.position.x,
                                   new_map.info.origin.position.y, true);
@@ -125,8 +123,7 @@ namespace NS_CostMap
     if(size_x_ != size_x || size_y_ != size_y || resolution_ != new_map.info.resolution || origin_x_ != new_map.info.origin.position.x || origin_y_ != new_map.info.origin.position.y)
     {
       // only update the size of the costmap stored locally in this layer
-      printf("Resizing static layer to %d X %d at %f m/pix\n", size_x, size_y,
-             new_map.info.resolution);
+      //printf("Resizing static layer to %d X %d at %f m/pix\n", size_x, size_y, new_map.info.resolution);
       resizeMap(size_x, size_y, new_map.info.resolution,
                 new_map.info.origin.position.x, new_map.info.origin.position.y);
     }
