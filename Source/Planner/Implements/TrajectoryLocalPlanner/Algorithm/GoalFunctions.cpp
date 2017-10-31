@@ -143,8 +143,13 @@ namespace NS_Planner
       {
         const NS_DataType::PoseStamped& pose = global_plan[i];
         poseStampedMsgToTF(pose, tf_pose);
-        tf_pose.setData(plan_to_global_transform * tf_pose);
-        tf_pose.stamp_ = plan_to_global_transform.stamp_;
+        ///////////////////////////////////////////////////////////////////////////////////
+        /* by pengjiawei */
+        //tf_pose.setData(plan_to_global_transform * tf_pose);
+        //tf_pose.stamp_ = plan_to_global_transform.stamp_;
+        tf_pose.setData (tf_pose);
+        tf_pose.stamp_ = NS_NaviCommon::Time::now();
+        ///////////////////////////////////////////////////////////////////////////////////
         poseStampedTFToMsg(tf_pose, newer_pose);
 
         transformed_plan.push_back(newer_pose);

@@ -45,11 +45,19 @@ namespace NS_CostMap
 
     parameter.loadConfigurationFile("inflation_layer.xml");
 
+    ///////////////////////////////////////////////////////
+    /* by pengjiawei */
+    /*
     double inflation_radius_ = parameter.getParameter("inflation_radius",
                                                       0.55f);
 
     double cost_scaling_factor_ = parameter.getParameter("cost_scaling_factor",
                                                          10.0f);
+    */
+    double inflation_radius_ = parameter.getParameter("inflation_radius", 1.75f);
+
+    double cost_scaling_factor_ = parameter.getParameter("cost_scaling_factor", 2.58f);
+    ///////////////////////////////////////////////////////
 
     matchSize();
 

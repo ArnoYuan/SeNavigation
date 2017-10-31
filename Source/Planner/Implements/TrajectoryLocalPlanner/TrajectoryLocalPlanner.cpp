@@ -67,9 +67,9 @@ namespace NS_Planner
 
       yaw_goal_tolerance_ = parameter.getParameter("yaw_goal_tolerance", 0.05f);
       xy_goal_tolerance_ = parameter.getParameter("xy_goal_tolerance", 0.10f);
-      acc_lim_x_ = parameter.getParameter("acc_lim_x", 2.5f);
-      acc_lim_y_ = parameter.getParameter("acc_lim_y", 2.5f);
-      acc_lim_theta_ = parameter.getParameter("acc_lim_theta", 3.2f);
+      acc_lim_x_ = parameter.getParameter("acc_lim_x", 0.3f);
+      acc_lim_y_ = parameter.getParameter("acc_lim_y", 0.3f);
+      acc_lim_theta_ = parameter.getParameter("acc_lim_theta", 0.3f);
 
       stop_time_buffer = parameter.getParameter("stop_time_buffer", 0.2f);
 
@@ -89,12 +89,12 @@ namespace NS_Planner
       sim_granularity = parameter.getParameter("sim_granularity", 0.025f);
       angular_sim_granularity = parameter.getParameter(
           "angular_sim_granularity", 0.025f);
-      vx_samples = parameter.getParameter("vx_samples", 3);
-      vtheta_samples = parameter.getParameter("vtheta_samples", 20);
+      vx_samples = parameter.getParameter("vx_samples", 20);
+      vtheta_samples = parameter.getParameter("vtheta_samples", 40);
 
-      pdist_scale = parameter.getParameter("path_distance_bias", 0.6f);
-      gdist_scale = parameter.getParameter("goal_distance_bias", 0.8f);
-      occdist_scale = parameter.getParameter("occdist_scale", 0.01f);
+      pdist_scale = parameter.getParameter("path_distance_bias", 32.0f);
+      gdist_scale = parameter.getParameter("goal_distance_bias", 20.0f);
+      occdist_scale = parameter.getParameter("occdist_scale", 0.02f);
 
       bool meter_scoring;
       if(parameter.getParameter("meter_scoring", 1) == 1)
@@ -126,7 +126,7 @@ namespace NS_Planner
       escape_reset_dist = parameter.getParameter("escape_reset_dist", 0.10f);
       escape_reset_theta = parameter.getParameter("escape_reset_theta",
                                                   (float) M_PI_4);
-      if(parameter.getParameter("holonomic_robot", 1) == 1)
+      if(parameter.getParameter("holonomic_robot", 0) == 1)
       {
         holonomic_robot = true;
       }
@@ -134,15 +134,15 @@ namespace NS_Planner
       {
         holonomic_robot = false;
       }
-      max_vel_x = parameter.getParameter("max_vel_x", 0.5f);
+      max_vel_x = parameter.getParameter("max_vel_x", 0.2f);
       min_vel_x = parameter.getParameter("min_vel_x", 0.1f);
 
       double max_rotational_vel;
-      max_rotational_vel = parameter.getParameter("max_rotational_vel", 1.0f);
+      max_rotational_vel = parameter.getParameter("max_rotational_vel", 0.3f);
       max_vel_th_ = max_rotational_vel;
       min_vel_th_ = -1.0 * max_rotational_vel;
       min_in_place_vel_th_ = parameter.getParameter(
-          "min_in_place_rotational_vel", 0.4f);
+          "min_in_place_rotational_vel", 0.1f);
       reached_goal_ = false;
       backup_vel = -0.1;
       backup_vel = parameter.getParameter("escape_vel", -0.1f);

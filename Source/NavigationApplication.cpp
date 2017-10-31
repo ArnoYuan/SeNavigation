@@ -128,7 +128,8 @@ namespace NS_Navigation
         continue;
       }
 
-      while(running)
+      bool planning = false;
+      while(!planning)
       {
         NS_DataType::Twist cmd_vel;
         NS_NaviCommon::Time last_valid_control;
@@ -149,6 +150,7 @@ namespace NS_Navigation
         switch(state)
         {
           case PLANNING:
+            planning = true;
             break;
           case CONTROLLING:
             if(local_planner->isGoalReached())
@@ -162,9 +164,8 @@ namespace NS_Navigation
 
             if(local_planner->computeVelocityCommands(cmd_vel))
             {
-              console.debug(
-                  "Got velocity data : l_x=%.3lf, l_y=%.3lf, a_z=%.3lf!",
-                  cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
+              console.debug("Got velocity data : l_x=%.3lf, l_y=%.3lf, a_z=%.3lf!",
+                            cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
               last_valid_control = NS_NaviCommon::Time::now();
               publishVelocity(cmd_vel.linear.x, cmd_vel.linear.y,
                               cmd_vel.angular.z);

@@ -72,10 +72,16 @@ namespace NS_CostMap
 
       layered_costmap->updateMap(x, y, yaw);
 
+      //////////////////////////////////////////////////////////////////////////
+      /* by pengjiawei */
+      /*
       NS_DataType::PolygonStamped footprint;
       footprint.header.stamp = NS_NaviCommon::Time::now();
       transformFootprint(x, y, yaw, padded_footprint, footprint);
       setPaddedRobotFootprint(toPointVector(footprint.polygon));
+      */
+      setPaddedRobotFootprint (footprint_from_param);
+      //////////////////////////////////////////////////////////////////////////
     }
   }
 
@@ -139,7 +145,7 @@ namespace NS_CostMap
     NS_NaviCommon::Parameter parameter;
     parameter.loadConfigurationFile("costmap.xml");
 
-    if(parameter.getParameter("track_unknown_space", 0) == 1)
+    if(parameter.getParameter("track_unknown_space", 1) == 1)
       track_unknown_space_ = true;
     else
       track_unknown_space_ = false;
@@ -154,6 +160,8 @@ namespace NS_CostMap
 
     map_update_frequency_ = parameter.getParameter("map_update_frequency",
                                                    1.0f);
+
+    footprint_padding_ = parameter.getParameter("footprint_padding", 0.1f);
 
     origin_x_ = 0.0;
     origin_y_ = 0.0;
@@ -270,7 +278,6 @@ namespace NS_CostMap
     x0 = layered_costmap->getCostmap()->getSizeInCellsX();
     y0 = layered_costmap->getCostmap()->getSizeInCellsY();
 
-    std::vector< NS_DataType::Point > footprint_from_param;
     if(!makeFootprintFromString(footprint_, footprint_from_param))
     {
       printf("Footprint parameter parse failure!\n");

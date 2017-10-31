@@ -57,6 +57,8 @@ namespace NS_CostMap
 
     std::vector< NS_DataType::Point > padded_footprint;
 
+    std::vector< NS_DataType::Point > footprint_from_param;
+
     bool got_map;
 
     bool running;
