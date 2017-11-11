@@ -57,6 +57,8 @@ namespace NS_CostMap
 
     std::vector< NS_DataType::Point > padded_footprint;
 
+    std::vector< NS_DataType::Point > trajectory_footprint;
+
     std::vector< NS_DataType::Point > footprint_from_param;
 
     bool got_map;
@@ -111,7 +113,8 @@ namespace NS_CostMap
 
     std::vector< NS_DataType::Point > getRobotFootprint()
     {
-      return padded_footprint;
+      //return padded_footprint;
+      return trajectory_footprint;
     }
   public:
     void

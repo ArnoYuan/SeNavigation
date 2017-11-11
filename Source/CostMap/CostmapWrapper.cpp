@@ -74,12 +74,12 @@ namespace NS_CostMap
 
       //////////////////////////////////////////////////////////////////////////
       /* by pengjiawei */
-      /*
+
       NS_DataType::PolygonStamped footprint;
       footprint.header.stamp = NS_NaviCommon::Time::now();
       transformFootprint(x, y, yaw, padded_footprint, footprint);
-      setPaddedRobotFootprint(toPointVector(footprint.polygon));
-      */
+      trajectory_footprint = toPointVector(footprint.polygon);
+
       setPaddedRobotFootprint (footprint_from_param);
       //////////////////////////////////////////////////////////////////////////
     }

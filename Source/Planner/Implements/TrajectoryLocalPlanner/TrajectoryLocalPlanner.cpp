@@ -137,10 +137,12 @@ namespace NS_Planner
       max_vel_x = parameter.getParameter("max_vel_x", 0.2f);
       min_vel_x = parameter.getParameter("min_vel_x", 0.1f);
 
-      double max_rotational_vel;
-      max_rotational_vel = parameter.getParameter("max_rotational_vel", 0.3f);
-      max_vel_th_ = max_rotational_vel;
-      min_vel_th_ = -1.0 * max_rotational_vel;
+      max_vel_th_ = parameter.getParameter("max_rotational_vel", 0.3f);
+      //////////////////////////////////////////////////////////////////////////
+      /* by pengjiawei */
+      //min_vel_th_ = -1.0 * max_rotational_vel;
+      min_vel_th_ = parameter.getParameter("min_rotational_vel", 0.1f);
+      //////////////////////////////////////////////////////////////////////////
       min_in_place_vel_th_ = parameter.getParameter(
           "min_in_place_rotational_vel", 0.1f);
       reached_goal_ = false;
