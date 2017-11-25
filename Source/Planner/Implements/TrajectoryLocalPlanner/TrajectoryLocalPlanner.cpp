@@ -116,16 +116,13 @@ namespace NS_Planner
       }
       else
       {
-        printf(
-            "Trajectory Rollout planner initialized with param meter_scoring set to false. Set it to true to make your settins robust against changes of costmap resolution.\n");
+        printf("Trajectory Rollout planner initialized with param meter_scoring set to false. Set it to true to make your settins robust against changes of costmap resolution.\n");
       }
 
       heading_lookahead = parameter.getParameter("heading_lookahead", 0.325f);
-      oscillation_reset_dist = parameter.getParameter("oscillation_reset_dist",
-                                                      0.05f);
+      oscillation_reset_dist = parameter.getParameter("oscillation_reset_dist", 0.05f);
       escape_reset_dist = parameter.getParameter("escape_reset_dist", 0.10f);
-      escape_reset_theta = parameter.getParameter("escape_reset_theta",
-                                                  (float) M_PI_4);
+      escape_reset_theta = parameter.getParameter("escape_reset_theta", (float) M_PI_4);
       if(parameter.getParameter("holonomic_robot", 0) == 1)
       {
         holonomic_robot = true;
